@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "42798175236",
+    "project_id": "aula-android-cb382",
+    "storage_bucket": "aula-android-cb382.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:42798175236:android:9df3d71e3e6a233c92d151",
+        "android_client_info": {
+          "package_name": "br.com.aulaandroid"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBWXjp7wq1aAoCJjE2V0PinGXTiHc1rpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

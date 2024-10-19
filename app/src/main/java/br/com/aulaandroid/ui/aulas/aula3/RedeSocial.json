@@ -1,0 +1,79 @@
+{
+  "nome": "A rede Social",
+  "usuarios": [
+    {
+      "nome" : "Daniel",
+      "idade": 30,
+      "preferencias" : [
+        {
+          "titulo" : "Ouvir musica",
+          "frequencia" : 12,
+          "categoria" : {
+            "id" : 22,
+            "nome" : "Lazer",
+            "dataDeCriacaoCategoria": "20/02/2020"
+          }
+        },
+        {
+          "titulo" : "Jogar Bola",
+          "frequencia" : 2,
+          "categoria" : {
+            "id" : 25,
+            "nome" : "Lazer",
+            "dataDeCriacaoCategoria": "20/02/2020"
+          }
+        }
+      ],
+      "dataDeEntrada" : "20/02/2022",
+      "perfil" : {
+        "nome" : "Usuário",
+        "nivelDeAcesso" : 2,
+        "numeroDePermissoes": 3
+      },
+      "posts" : [
+        {
+          "titulo" : "O que fiz semana passada",
+          "data" : "20/01/2022",
+          "imagem" : "imagem.png"
+        },
+        {
+          "titulo" : "O que fiz essa semana ",
+          "data" : "20/01/2021",
+          "imagem" : "imagem222.png"
+        }
+      ]
+    },
+    {
+      "nome" : "Maria",
+      "idade": 40,
+      "preferencias" : [
+        {
+          "titulo" : "Gerenciar Pessoas",
+          "frequencia" : 7,
+          "categoria" : {
+            "id" : 47,
+            "nome" : "Trabalho",
+            "dataDeCriacaoCategoria": "20/02/2020"
+          }
+        },
+        {
+          "titulo" : "Comer Sushi",
+          "frequencia" : 2,
+          "categoria" : {
+            "id" : 45,
+            "nome" : "Lazer",
+            "dataDeCriacaoCategoria": "20/02/2020"
+          }
+        }
+      ],
+      "dataDeEntrada" : "20/02/2018",
+      "perfil" : {
+        "nome" : "Admin",
+        "nivelDeAcesso" : 10,
+        "numeroDePermissoes": 30
+      }
+    }
+  ],
+  "cnpj" : "121.121.1212/10",
+  "apelido" : "apelido generico"
+}

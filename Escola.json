@@ -1,0 +1,45 @@
+{
+  "nome" : "Escola Estadual Raul Teixeira da Costa Sobrinho",
+  "numeroAlunos": 3403,
+  "funcionarios" : [
+    {
+      "nome" : "Alessandra",
+      "idade": 30,
+      "cargo": {
+        "nomeCargo": "Professor nivel 1",
+        "modeloPresencial": false
+      }
+    },
+    {
+      "nome" : "André",
+      "idade": 40,
+      "cargo": {
+        "nomeCargo": "Professor nivel 2",
+        "modeloPresencial": false
+      }
+    },
+    {
+      "nome" : "Marcos",
+      "idade": 40,
+      "cargo": {
+        "nomeCargo": "Tecnico de TI",
+        "modeloPresencial": true
+      },
+      "estadoCivil": "Solteiro"
+    },
+    {
+      "nome" : "Antonio",
+      "idade": 40,
+      "cargo": {
+        "nomeCargo": "Diretor",
+        "modeloPresencial": false
+      },
+      "estadoCivil": "Casado"
+    }
+  ],
+  "endereco" : {
+    "rua": "Rua rua rua",
+    "numero": 9000
+  },
+  "emFuncionamento" : true
+}

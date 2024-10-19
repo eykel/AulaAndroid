@@ -1,0 +1,28 @@
+{
+  "numeroDeBlocos" : 10,
+  "numeroTotalDePessoas": 560,
+  "blocos" : [
+    {
+      "nome": "Bloco1",
+      "apartamentos": [
+        {
+          "proprietario": "Jose das Freitas",
+          "numero": 201,
+          "temPet": false,
+          "taxaCondominio": 123.31
+        },
+        {
+          "proprietario": "Maria Dantas",
+          "numero": 304,
+          "temPet": false,
+          "taxaCondominio": 123.31,
+          "inquilino": {
+            "nome": "Maria Luzia",
+            "dataDeEntrada": "20/12/2020"
+          }
+        }
+      ]
+    }
+  ],
+  "nome": "Condomínio Paz e Luz"
+}

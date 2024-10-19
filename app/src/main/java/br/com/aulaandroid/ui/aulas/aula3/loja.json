@@ -1,0 +1,51 @@
+{
+  "endereco" : {
+    "rua" : "Av Guarani",
+    "numero" : 9343,
+    "bairro" : {
+      "nome" : "Liberdade",
+      "numeroDeHabitantes" : 1234
+    }
+  },
+  "clientes" : [
+    {
+      "nome" : "Maria Claudia",
+      "possuiDependentes" : true,
+      "dependentes" : [
+        {
+          "nome" : "Maria Clara",
+          "idade" : 13
+        },
+        {
+          "nome" : "Felipe Daniel",
+          "idade" : 30,
+          "sexo" : "Masculino"
+        }
+      ],
+      "formaDePagamentoPreferida" : ["Cartão de crédio", "dinheiro"],
+      "endereco" : {
+        "rua" : "Rua Juatuba",
+        "numero" : 354,
+        "bairro" : {
+          "nome" : "Cristina C",
+          "numeroDeHabitantes" : 3001
+        }
+      }
+    },
+    {
+      "nome" : "Rui Barbosa",
+      "possuiDependentes" : false,
+      "formaDePagamentoPreferida" : ["Débito", "dinheiro"],
+      "endereco" : {
+        "rua" : "Rua Matuaba",
+        "numero" : 333,
+        "bairro" : {
+          "nome" : "Cristina B",
+          "numeroDeHabitantes" : 3002
+        }
+      }
+    }
+  ],
+  "nome" : "Loja da dona Maria",
+  "cnpj" : "121.111.0001/30"
+}
