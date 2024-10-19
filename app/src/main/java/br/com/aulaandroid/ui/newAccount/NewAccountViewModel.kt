@@ -32,6 +32,7 @@ class NewAccountViewModel(
         viewModelScope.launch {
             when(val result = repository.newAccount(email, password)){
                 is RequestHandler.Success -> {
+                    //todo sucesso - Retornar algo pro usuário na tela
                 }
                 is RequestHandler.Failure -> {
                     //todo retornar mensagem de erro pro usuário na tela.
