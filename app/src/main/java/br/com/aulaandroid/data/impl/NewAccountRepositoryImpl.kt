@@ -10,5 +10,7 @@ class NewAccountRepositoryImpl(
     override suspend fun newAccount(email: String, password:String) : RequestHandler =
         networking.newAccount(email, password)
 
+    //Tem que retirar esse comentário
+
 
 }
