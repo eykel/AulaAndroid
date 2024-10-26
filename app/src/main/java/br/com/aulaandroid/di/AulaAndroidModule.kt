@@ -24,7 +24,7 @@ val aulaAndroidModule = module {
     single<FirebaseFirestore> { Firebase.firestore }
     factory<LoginNetworking> { LoginNetworkingImpl() }
     factory<LoginRepository> { LoginRepositoryImpl(get()) }
-    factory<NewAccountNetworking> { NewAccountNetworkingImpl(get()) }
+    factory<NewAccountNetworking> { NewAccountNetworkingImpl(get(), get()) }
     factory<NewAccountRepository> { NewAccountRepositoryImpl(get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { NewAccountViewModel(get()) }

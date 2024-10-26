@@ -5,6 +5,7 @@ import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.aulaandroid.data.NewAccountRepository
+import br.com.aulaandroid.data.model.UserModel
 import br.com.aulaandroid.util.RequestHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,15 +29,16 @@ class NewAccountViewModel(
     private val _validBirthDay = MutableStateFlow(true)
     val validBirthDay : StateFlow<Boolean> = _validBirthDay
 
-    fun createNewAccount(email: String, password: String){
+    fun createNewAccount(user: UserModel){
         viewModelScope.launch {
-            when(val result = repository.newAccount(email, password)){
+            when(val result = repository.newAccount(user)){
                 is RequestHandler.Success -> {
                     //todo sucesso - Retornar algo pro usuário na tela
+                    Log.d("TAG", "createNewAccount: DEU CERTO")
                 }
                 is RequestHandler.Failure -> {
                     //todo retornar mensagem de erro pro usuário na tela.
-                    Log.d("TAG", "createNewAccount: " + result.ex)
+                    Log.e("TAG", "createNewAccount: " + result.ex)
                 }
             }
         }

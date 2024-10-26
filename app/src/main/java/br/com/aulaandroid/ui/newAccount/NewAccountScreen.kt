@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import br.com.aulaandroid.data.model.UserModel
 
 @Composable
 fun NewAccountScreen(viewModel: NewAccountViewModel){
@@ -110,7 +111,14 @@ fun NewAccountScreen(viewModel: NewAccountViewModel){
         Button(
             modifier = Modifier.padding(10.dp),
             onClick = {
-                viewModel.createNewAccount(email, password)
+                viewModel.createNewAccount(
+                    UserModel(
+                        name = name,
+                        birthDay = birthDay,
+                        password = password,
+                        email = email
+                    )
+                )
             },
         ) {
             Text(
