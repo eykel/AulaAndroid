@@ -14,7 +14,7 @@ serialization = "1.6.3"
 googleServices = "4.4.2"
 firebaseAuth = "22.1.2"
 firebaseFireStore = "24.8.1"
-kotlinParcelize = "2.1.0-Beta1"
+lottieCompose = "6.5.2"
 
 
 
@@ -38,6 +38,7 @@ navigation-compose = { group="androidx.navigation", name = "navigation-compose",
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization"}
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuth"}
 firebase-firestrore = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFireStore"}
+lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottieCompose"}
 
 
 [plugins]

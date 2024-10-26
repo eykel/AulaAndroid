@@ -81,4 +81,7 @@ dependencies {
     //Firebase
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestrore)
+
+    //Lottie Animations
+    implementation(libs.lottie.compose)
 }

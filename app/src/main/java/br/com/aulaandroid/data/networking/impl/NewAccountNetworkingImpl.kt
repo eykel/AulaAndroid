@@ -35,7 +35,7 @@ class NewAccountNetworkingImpl(
                 .set(user.copy(password = null))
                 .await()
                 .run {
-                    RequestHandler.Success("$this")
+                    RequestHandler.Success(Unit)
                 }
         } catch (ex: Exception) {
             RequestHandler.Failure(Exception(ex.cause))

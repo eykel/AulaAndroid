@@ -1,8 +1,11 @@
 package br.com.aulaandroid.ui.newAccount
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -20,7 +23,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import br.com.aulaandroid.R
 import br.com.aulaandroid.data.model.UserModel
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 
 @Composable
 fun NewAccountScreen(viewModel: NewAccountViewModel){
@@ -34,7 +43,35 @@ fun NewAccountScreen(viewModel: NewAccountViewModel){
     val validEmail by viewModel.validEmail.collectAsState()
     val validPassword by viewModel.validPassword.collectAsState()
     val validBirthDay by viewModel.validBirthDay.collectAsState()
+    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading))
+    val progress by animateLottieCompositionAsState(
+        composition = composition,
+        iterations = LottieConstants.IterateForever
+    )
 
+    val state by viewModel.newAccountState.collectAsState()
+
+    when(state){
+        is NewAccountState.Failure -> {
+            TODO("navegação para tela de error")
+        }
+        NewAccountState.Loading -> {
+            //ESSE CARA PRECISA APARECER SOBREPOSTO O CONTEUDO (OVERLAP)
+            Column(
+                modifier = Modifier.fillMaxWidth().fillMaxHeight().background(Color.Red.copy(alpha = 0.3f)),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ){
+                LottieAnimation(
+                    composition = composition,
+                    progress = { progress }
+                )
+            }
+        }
+        NewAccountState.Success -> {
+            TODO("Conteudo")
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -111,7 +148,7 @@ fun NewAccountScreen(viewModel: NewAccountViewModel){
         Button(
             modifier = Modifier.padding(10.dp),
             onClick = {
-                viewModel.createNewAccount(
+                viewModel.createNewAccount2(
                     UserModel(
                         name = name,
                         birthDay = birthDay,
@@ -126,6 +163,8 @@ fun NewAccountScreen(viewModel: NewAccountViewModel){
             )
         }
     }
+
+
 
 
 

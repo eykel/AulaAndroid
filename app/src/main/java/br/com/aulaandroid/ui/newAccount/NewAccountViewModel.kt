@@ -29,7 +29,11 @@ class NewAccountViewModel(
     private val _validBirthDay = MutableStateFlow(true)
     val validBirthDay : StateFlow<Boolean> = _validBirthDay
 
+    private val _newAccountState = MutableStateFlow(NewAccountState.Loading)
+    val newAccountState : StateFlow<NewAccountState> = _newAccountState
+
     fun createNewAccount(user: UserModel){
+
         viewModelScope.launch {
             when(val result = repository.newAccount(user)){
                 is RequestHandler.Success -> {
@@ -42,6 +46,11 @@ class NewAccountViewModel(
                 }
             }
         }
+    }
+
+    fun createNewAccount2(user: UserModel){
+        //Função criada somente para testar o loading
+        _newAccountState.value = NewAccountState.Loading
     }
 
 
