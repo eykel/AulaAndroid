@@ -1,15 +1,16 @@
 package br.com.aulaandroid.ui.newAccount
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -25,19 +26,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import br.com.aulaandroid.R
 import br.com.aulaandroid.data.model.UserModel
-import com.airbnb.lottie.compose.LottieAnimation
+import br.com.aulaandroid.navigation.AulaAndroidState
+import br.com.aulaandroid.navigation.Route
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 
 @Composable
-fun NewAccountScreen(viewModel: NewAccountViewModel){
+fun NewAccountScreen(
+    viewModel: NewAccountViewModel,
+    onEvent: (AulaAndroidState) -> Unit,
+){
+    Content(viewModel, onEvent)
+}
 
+
+@Composable
+private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) -> Unit,){
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var birthDay by remember { mutableStateOf("") }
+    var loading by remember { mutableStateOf(false) }
 
     val validName by viewModel.validName.collectAsState()
     val validEmail by viewModel.validEmail.collectAsState()
@@ -48,29 +59,20 @@ fun NewAccountScreen(viewModel: NewAccountViewModel){
         composition = composition,
         iterations = LottieConstants.IterateForever
     )
+    val newAccountState by viewModel.newAccountState.collectAsState()
 
-    val state by viewModel.newAccountState.collectAsState()
-
-    when(state){
+    when(val state = newAccountState){
         is NewAccountState.Failure -> {
-            TODO("navegação para tela de error")
+            onEvent.invoke(AulaAndroidState.Error(state.ex.message.orEmpty()))
         }
-        NewAccountState.Loading -> {
-            //ESSE CARA PRECISA APARECER SOBREPOSTO O CONTEUDO (OVERLAP)
-            Column(
-                modifier = Modifier.fillMaxWidth().fillMaxHeight().background(Color.Red.copy(alpha = 0.3f)),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ){
-                LottieAnimation(
-                    composition = composition,
-                    progress = { progress }
-                )
-            }
+        is NewAccountState.Loading -> {
+            loading = state.isLoading
         }
         NewAccountState.Success -> {
-            TODO("Conteudo")
+            onEvent.invoke(AulaAndroidState.Navigate(Route.LoginScreen))
         }
+
+        NewAccountState.Default -> {}
     }
 
     Column(
@@ -144,11 +146,10 @@ fun NewAccountScreen(viewModel: NewAccountViewModel){
             )
         )
 
-
         Button(
-            modifier = Modifier.padding(10.dp),
+            modifier = Modifier.padding(10.dp).widthIn(min = 150.dp),
             onClick = {
-                viewModel.createNewAccount2(
+                viewModel.createNewAccount(
                     UserModel(
                         name = name,
                         birthDay = birthDay,
@@ -158,14 +159,18 @@ fun NewAccountScreen(viewModel: NewAccountViewModel){
                 )
             },
         ) {
-            Text(
-                text = "Registrar",
-            )
+            if (loading) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(ButtonDefaults.IconSize),
+                    color = Color.White,
+                    strokeWidth = 2.dp
+                )
+            } else {
+                Text(
+                    text = "Registrar",
+                )
+            }
         }
     }
-
-
-
-
-
 }
