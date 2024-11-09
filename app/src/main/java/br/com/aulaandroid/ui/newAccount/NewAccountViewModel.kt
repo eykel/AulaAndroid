@@ -1,6 +1,5 @@
 package br.com.aulaandroid.ui.newAccount
 
-import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,20 +28,21 @@ class NewAccountViewModel(
     private val _validBirthDay = MutableStateFlow(true)
     val validBirthDay : StateFlow<Boolean> = _validBirthDay
 
-    private val _newAccountState = MutableStateFlow(NewAccountState.Loading)
+    private val _newAccountState = MutableStateFlow<NewAccountState>(NewAccountState.Default)
     val newAccountState : StateFlow<NewAccountState> = _newAccountState
 
     fun createNewAccount(user: UserModel){
 
         viewModelScope.launch {
+            _newAccountState.value = NewAccountState.Loading(true)
             when(val result = repository.newAccount(user)){
                 is RequestHandler.Success -> {
-                    //todo sucesso - Retornar algo pro usuário na tela
-                    Log.d("TAG", "createNewAccount: DEU CERTO")
+                    _newAccountState.value = NewAccountState.Loading(false)
+                    _newAccountState.value = NewAccountState.Success
                 }
                 is RequestHandler.Failure -> {
-                    //todo retornar mensagem de erro pro usuário na tela.
-                    Log.e("TAG", "createNewAccount: " + result.ex)
+                    _newAccountState.value = NewAccountState.Loading(false)
+                    _newAccountState.value = NewAccountState.Failure(result.ex)
                 }
             }
         }
@@ -50,7 +50,7 @@ class NewAccountViewModel(
 
     fun createNewAccount2(user: UserModel){
         //Função criada somente para testar o loading
-        _newAccountState.value = NewAccountState.Loading
+        _newAccountState.value = NewAccountState.Loading(true)
     }
 
 
