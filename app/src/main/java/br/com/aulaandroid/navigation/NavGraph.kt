@@ -2,38 +2,33 @@ package br.com.aulaandroid.navigation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import br.com.aulaandroid.ui.components.BottomSheetV1
 import br.com.aulaandroid.ui.login.LoginScreen
 import br.com.aulaandroid.ui.newAccount.NewAccountScreen
 import br.com.aulaandroid.ui.theme.AulaAndroidTheme
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavGraph(){
     val navController = rememberNavController()
-    val scope = rememberCoroutineScope()
     var bottomSheetIsOpen = rememberSaveable { mutableStateOf(false) }
     val errorMessage = remember { mutableStateOf("") }
 
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-
-
 
 
     AulaAndroidTheme {
@@ -57,7 +52,6 @@ fun NavGraph(){
                             when(state){
                                 is AulaAndroidState.Error -> {
                                     errorMessage.value = state.message
-                                    scope.launch { sheetState.show() }
                                     bottomSheetIsOpen.value = true
                                 }
                                 is AulaAndroidState.Navigate -> navController.navigate(state.route)
@@ -72,17 +66,11 @@ fun NavGraph(){
                     onDismissRequest = {
                         bottomSheetIsOpen.value = false
                     },
-                    sheetState = sheetState
+                    sheetState = sheetState,
+                    containerColor = Color.Transparent
                 ) {
                     // Sheet content
-                    Text(errorMessage.value)
-                    Button(onClick = {
-                        scope.launch { sheetState.hide() }.invokeOnCompletion {
-                            bottomSheetIsOpen.value = false
-                        }
-                    }) {
-                        Text("Hide bottom sheet")
-                    }
+                    BottomSheetV1(errorMessage.value)
                 }
             }
         }

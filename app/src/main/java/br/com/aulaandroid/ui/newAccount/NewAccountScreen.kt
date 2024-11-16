@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,14 +25,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import br.com.aulaandroid.R
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.aulaandroid.data.model.UserModel
 import br.com.aulaandroid.navigation.AulaAndroidState
 import br.com.aulaandroid.navigation.Route
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieConstants
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
-import com.airbnb.lottie.compose.rememberLottieComposition
 
 @Composable
 fun NewAccountScreen(
@@ -54,25 +51,18 @@ private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) 
     val validEmail by viewModel.validEmail.collectAsState()
     val validPassword by viewModel.validPassword.collectAsState()
     val validBirthDay by viewModel.validBirthDay.collectAsState()
-    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.loading))
-    val progress by animateLottieCompositionAsState(
-        composition = composition,
-        iterations = LottieConstants.IterateForever
-    )
     val newAccountState by viewModel.newAccountState.collectAsState()
 
-    when(val state = newAccountState){
-        is NewAccountState.Failure -> {
-            onEvent.invoke(AulaAndroidState.Error(state.ex.message.orEmpty()))
+    LaunchedEffect(newAccountState) {
+        when(val state = newAccountState){
+            is NewAccountState.Failure -> {
+                onEvent.invoke(AulaAndroidState.Error(state.ex.message.orEmpty()))
+            }
+            NewAccountState.Success -> {
+                onEvent.invoke(AulaAndroidState.Navigate(Route.LoginScreen))
+            }
+            NewAccountState.Default -> {}
         }
-        is NewAccountState.Loading -> {
-            loading = state.isLoading
-        }
-        NewAccountState.Success -> {
-            onEvent.invoke(AulaAndroidState.Navigate(Route.LoginScreen))
-        }
-
-        NewAccountState.Default -> {}
     }
 
     Column(
