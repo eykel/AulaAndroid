@@ -8,4 +8,6 @@ sealed class Route {
     object LoginScreen : Route()
     @Serializable
     object NewAccountScreen : Route()
+    @Serializable
+    object HomeScreen : Route()
 }

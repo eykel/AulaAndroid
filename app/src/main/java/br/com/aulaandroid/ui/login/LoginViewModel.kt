@@ -3,7 +3,7 @@ package br.com.aulaandroid.ui.login
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.aulaandroid.data.LoginRepository
+import br.com.aulaandroid.data.repository.LoginRepository
 import br.com.aulaandroid.util.RequestHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

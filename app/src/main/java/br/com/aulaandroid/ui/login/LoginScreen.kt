@@ -65,7 +65,7 @@ private fun Content(viewModel: LoginViewModel, onEvent: (AulaAndroidState) -> Un
                 onEvent.invoke(AulaAndroidState.Error(state.ex.message.orEmpty()))
             }
             LoginState.Success -> {
-                onEvent.invoke(AulaAndroidState.Navigate(Route.LoginScreen))
+                onEvent.invoke(AulaAndroidState.Navigate(Route.HomeScreen))
             }
             LoginState.Default -> {}
         }

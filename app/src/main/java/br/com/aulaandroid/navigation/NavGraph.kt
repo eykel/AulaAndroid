@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.com.aulaandroid.ui.components.BottomSheetV1
+import br.com.aulaandroid.ui.home.HomeScreen
 import br.com.aulaandroid.ui.login.LoginScreen
 import br.com.aulaandroid.ui.newAccount.NewAccountScreen
 import br.com.aulaandroid.ui.theme.AulaAndroidTheme
@@ -57,6 +58,10 @@ fun NavGraph(){
                                 is AulaAndroidState.Navigate -> navController.navigate(state.route)
                             }
                         }
+                    }
+
+                    composable<Route.HomeScreen> {
+                        HomeScreen()
                     }
                 }
             }
