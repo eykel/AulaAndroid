@@ -22,7 +22,7 @@ import org.koin.dsl.module
 val aulaAndroidModule = module {
     single<FirebaseAuth> { Firebase.auth }
     single<FirebaseFirestore> { Firebase.firestore }
-    factory<LoginNetworking> { LoginNetworkingImpl() }
+    factory<LoginNetworking> { LoginNetworkingImpl(get()) }
     factory<LoginRepository> { LoginRepositoryImpl(get()) }
     factory<NewAccountNetworking> { NewAccountNetworkingImpl(get(), get()) }
     factory<NewAccountRepository> { NewAccountRepositoryImpl(get()) }

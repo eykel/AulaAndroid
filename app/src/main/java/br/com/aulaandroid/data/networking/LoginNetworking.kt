@@ -1,4 +1,8 @@
 package br.com.aulaandroid.data.networking
 
-interface LoginNetworking {
+import br.com.aulaandroid.util.RequestHandler
+
+
+interface LoginNetworking  {
+    suspend fun login(email: String, password: String) : RequestHandler
 }
