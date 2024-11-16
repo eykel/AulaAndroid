@@ -50,7 +50,6 @@ private fun Content(viewModel: LoginViewModel, onEvent: (AulaAndroidState) -> Un
     var password by remember { mutableStateOf("") }
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
     val validEmail by viewModel.validEmail.collectAsState()
-    val register by viewModel.register.collectAsState()
     Column(
         modifier = Modifier
             .fillMaxSize()

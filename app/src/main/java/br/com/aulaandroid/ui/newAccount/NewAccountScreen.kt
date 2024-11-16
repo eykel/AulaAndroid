@@ -45,13 +45,13 @@ private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var birthDay by remember { mutableStateOf("") }
-    var loading by remember { mutableStateOf(false) }
 
     val validName by viewModel.validName.collectAsState()
     val validEmail by viewModel.validEmail.collectAsState()
     val validPassword by viewModel.validPassword.collectAsState()
     val validBirthDay by viewModel.validBirthDay.collectAsState()
     val newAccountState by viewModel.newAccountState.collectAsState()
+    val loading by viewModel.loadingButton.collectAsStateWithLifecycle()
 
     LaunchedEffect(newAccountState) {
         when(val state = newAccountState){
@@ -85,7 +85,8 @@ private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) 
             placeholder = { Text(text = "Nome") },
             colors = TextFieldDefaults.colors(
                 focusedTextColor = Color.Blue,
-            )
+            ),
+            enabled = !loading
         )
 
         TextField(
@@ -101,7 +102,8 @@ private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) 
             placeholder = { Text(text = "Email") },
             colors = TextFieldDefaults.colors(
                 focusedTextColor = Color.Blue,
-            )
+            ),
+            enabled = !loading
         )
 
         TextField(
@@ -117,7 +119,8 @@ private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) 
             placeholder = { Text(text = "Data de Nascimento") },
             colors = TextFieldDefaults.colors(
                 focusedTextColor = Color.Blue,
-            )
+            ),
+            enabled = !loading
         )
 
         TextField(
@@ -133,11 +136,14 @@ private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) 
             placeholder = { Text(text = "Senha") },
             colors = TextFieldDefaults.colors(
                 focusedTextColor = Color.Blue,
-            )
+            ),
+            enabled = !loading
         )
 
         Button(
-            modifier = Modifier.padding(10.dp).widthIn(min = 150.dp),
+            modifier = Modifier
+                .padding(10.dp)
+                .widthIn(min = 150.dp),
             onClick = {
                 viewModel.createNewAccount(
                     UserModel(

@@ -30,30 +30,27 @@ class NewAccountViewModel(
     val validBirthDay : StateFlow<Boolean> = _validBirthDay
 
     private val _newAccountState = MutableStateFlow<NewAccountState>(NewAccountState.Default)
-    val newAccountState : StateFlow<NewAccountState> = _newAccountState
+    val newAccountState : StateFlow<NewAccountState> = _newAccountState.asStateFlow()
+
+    private val _loadingButton = MutableStateFlow(false)
+    val loadingButton = _loadingButton.asStateFlow()
 
     fun createNewAccount(user: UserModel){
 
         viewModelScope.launch {
-            _newAccountState.value = NewAccountState.Loading(true)
+            _loadingButton.value = true
             when(val result = repository.newAccount(user)){
                 is RequestHandler.Success -> {
-                    _newAccountState.value = NewAccountState.Loading(false)
+                    _loadingButton.value = false
                     _newAccountState.value = NewAccountState.Success
                 }
                 is RequestHandler.Failure -> {
-                    _newAccountState.value = NewAccountState.Loading(false)
+                    _loadingButton.value = false
                     _newAccountState.value = NewAccountState.Failure(result.ex)
                 }
             }
         }
     }
-
-    fun createNewAccount2(user: UserModel){
-        //Função criada somente para testar o loading
-        _newAccountState.value = NewAccountState.Loading(true)
-    }
-
 
     fun validName(name: String){
         _validName.value = name.split(" ").size > 1
