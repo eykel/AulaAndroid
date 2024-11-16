@@ -1,6 +1,6 @@
-package br.com.aulaandroid.data.impl
+package br.com.aulaandroid.data.repository.impl
 
-import br.com.aulaandroid.data.LoginRepository
+import br.com.aulaandroid.data.repository.LoginRepository
 import br.com.aulaandroid.data.networking.LoginNetworking
 import br.com.aulaandroid.util.RequestHandler
 

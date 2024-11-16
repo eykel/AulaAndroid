@@ -1,4 +1,4 @@
-package br.com.aulaandroid.data
+package br.com.aulaandroid.data.repository
 
 import br.com.aulaandroid.data.model.UserModel
 import br.com.aulaandroid.util.RequestHandler
