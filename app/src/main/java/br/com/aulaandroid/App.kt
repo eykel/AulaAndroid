@@ -1,7 +1,9 @@
 package br.com.aulaandroid
 
 import android.app.Application
+import br.com.aulaandroid.di.apiModule
 import br.com.aulaandroid.di.aulaAndroidModule
+import br.com.aulaandroid.di.retrofitModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -14,7 +16,7 @@ class App : Application() {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(aulaAndroidModule)
+            modules(retrofitModule, aulaAndroidModule, apiModule)
         }
     }
 }

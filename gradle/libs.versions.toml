@@ -15,6 +15,7 @@ googleServices = "4.4.2"
 firebaseAuth = "22.1.2"
 firebaseFireStore = "24.8.1"
 lottieCompose = "6.5.2"
+retrofit = "2.11.0"
 
 
 
@@ -39,6 +40,8 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuth"}
 firebase-firestrore = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFireStore"}
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottieCompose"}
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit"}
+retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 
 
 [plugins]

@@ -72,16 +72,20 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
 
-    //Framework Injeção de Dependencias.
+    //Framework Injeção de Dependencias Koin
     implementation(libs.koin.androidx.compose)
 
-    //Navegação
+    //Navegação (Navegação entre telas)
     implementation(libs.navigation.compose)
 
-    //Firebase
+    //Firebase (Utilizado para autenticar e salvar em banco de dados online)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestrore)
 
-    //Lottie Animations
+    //Lottie Animations (Utilizdo para animações, como o loading)
     implementation(libs.lottie.compose)
+
+    //Retrofit (Utilizado para fazer requests em APIs externas)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
 }
