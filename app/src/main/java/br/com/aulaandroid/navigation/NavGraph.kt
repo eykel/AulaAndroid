@@ -61,7 +61,7 @@ fun NavGraph(){
                     }
 
                     composable<Route.HomeScreen> {
-                        HomeScreen()
+                        HomeScreen(koinViewModel())
                     }
                 }
             }
