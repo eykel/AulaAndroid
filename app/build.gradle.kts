@@ -88,4 +88,7 @@ dependencies {
     //Retrofit (Utilizado para fazer requests em APIs externas)
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
+
+    //Dependencia para fazer load de imagem vinda da internet
+    implementation(libs.coil.compose)
 }

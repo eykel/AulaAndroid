@@ -16,6 +16,7 @@ firebaseAuth = "22.1.2"
 firebaseFireStore = "24.8.1"
 lottieCompose = "6.5.2"
 retrofit = "2.11.0"
+coil = "3.0.4"
 
 
 
@@ -42,6 +43,7 @@ firebase-firestrore = { group = "com.google.firebase", name = "firebase-firestor
 lottie-compose = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottieCompose"}
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit"}
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 
 
 [plugins]
