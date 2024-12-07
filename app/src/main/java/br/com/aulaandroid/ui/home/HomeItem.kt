@@ -10,9 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import br.com.aulaandroid.R
 import br.com.aulaandroid.data.model.GithubUser
 import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
 
 @Composable
 fun HomeItem(user: GithubUser){
@@ -21,9 +25,13 @@ fun HomeItem(user: GithubUser){
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
-            model = user.avatarImage,
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(user.avatarImage)
+                .build(),
             contentDescription = "",
             modifier = Modifier.padding(6.dp).clip(CircleShape),
+            fallback = painterResource(id = R.drawable.user_circle),
+            error = painterResource(id = R.drawable.user_circle)
         )
 
         Text(
