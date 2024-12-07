@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">AulaAndroid</string>
     <string name="title_activity_primeiro_compose">PrimeiroComposeActivity</string>
+    <string name="begin_search_user">Comece pesquisando um login de usuiário</string>
+    <string name="search_placeholder">Pesquisar</string>
+    <string name="dont_have_account_text_button">Não possui conta? Cadastrar-se</string>
+    <string name="login_text_button">Entrar</string>
+    <string name="password_text">Senha</string>
+    <string name="email_text">Email</string>
+    <string name="name_text">Nome</string>
+    <string name="register">Cadastre-se</string>
+    <string name="hide_password_content_description">Hide password</string>
+    <string name="show_password_content_description">Show password</string>
+    <string name="birthday_text">Data de Nascimento</string>
+    <string name="register_button">Registrar</string>
 </resources>
