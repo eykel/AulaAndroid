@@ -16,16 +16,20 @@ class HomeViewModel(val repository: GithubRepository) : ViewModel() {
     val homeState = _homeState.asStateFlow()
 
 
-    fun getUserList(){
+    fun getUserList(param: String){
         viewModelScope.launch {
-            when(val result = repository.getUserList("eykel")){
-                is RequestHandler.Failure -> {
-                    Log.d("TAG", "getUserList: ${result.ex}")
+            if(param.isNotEmpty()){
+                when(val result = repository.getUserList(param)){
+                    is RequestHandler.Failure -> {
+                        Log.d("TAG", "getUserList: ${result.ex}")
+                    }
+                    is RequestHandler.Success -> {
+                        Log.d("TAG", "getUserList: ${result.result}")
+                        _homeState.value = HomeState.Success(result.result as GithubUserList)
+                    }
                 }
-                is RequestHandler.Success -> {
-                    Log.d("TAG", "getUserList: ${result.result}")
-                    _homeState.value = HomeState.Success(result.result as GithubUserList)
-                }
+            }else{
+                _homeState.value = HomeState.Default
             }
         }
     }
