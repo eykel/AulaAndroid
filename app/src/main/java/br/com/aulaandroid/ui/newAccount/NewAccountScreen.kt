@@ -4,16 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -23,12 +16,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import br.com.aulaandroid.R
 import br.com.aulaandroid.data.model.UserModel
 import br.com.aulaandroid.navigation.AulaAndroidState
 import br.com.aulaandroid.navigation.Route
+import br.com.aulaandroid.ui.components.ButtonCustom
+import br.com.aulaandroid.ui.components.TextFieldCustom
+import br.com.aulaandroid.ui.components.util.TextFieldType
+import br.com.aulaandroid.ui.theme.MyBlue
 
 @Composable
 fun NewAccountScreen(
@@ -72,78 +73,64 @@ private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) 
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        TextField(
-            modifier = Modifier.padding(20.dp),
-            value = name,
+
+
+        Text(
+            text = stringResource(R.string.register),
+            Modifier.padding(20.dp),
+            style = TextStyle(
+                fontSize = 24.sp,
+                fontWeight = FontWeight(600),
+                color = MyBlue
+            )
+        )
+
+        TextFieldCustom(
+            textValue = name,
             onValueChange = { newValue ->
                 name = newValue
                 viewModel.validName(name)
             },
-            label = { Text(text = "Nome") },
+            labelText = R.string.name_text,
             isError = !validName,
-            maxLines = 1,
-            placeholder = { Text(text = "Nome") },
-            colors = TextFieldDefaults.colors(
-                focusedTextColor = Color.Blue,
-            ),
             enabled = !loading
         )
 
-        TextField(
-            modifier = Modifier.padding(20.dp),
-            value = email,
+        TextFieldCustom(
+            textValue = email,
             onValueChange = { newValue ->
                 email = newValue
                 viewModel.validEmail(email)
             },
-            label = { Text(text = "Email") },
+            labelText = R.string.email_text,
             isError = !validEmail,
-            maxLines = 1,
-            placeholder = { Text(text = "Email") },
-            colors = TextFieldDefaults.colors(
-                focusedTextColor = Color.Blue,
-            ),
             enabled = !loading
         )
 
-        TextField(
-            modifier = Modifier.padding(20.dp),
-            value = birthDay,
+        TextFieldCustom(
+            textValue = birthDay,
             onValueChange = { newValue ->
                 birthDay = newValue
                 viewModel.validBirthDay(birthDay)
             },
-            maxLines = 1,
-            label = { Text(text = "Data de Nascimento") },
+            labelText = R.string.birthday_text,
             isError = !validBirthDay,
-            placeholder = { Text(text = "Data de Nascimento") },
-            colors = TextFieldDefaults.colors(
-                focusedTextColor = Color.Blue,
-            ),
             enabled = !loading
         )
 
-        TextField(
-            modifier = Modifier.padding(20.dp),
-            value = password,
+        TextFieldCustom(
+            textValue = password,
             onValueChange = { newValue ->
                 password = newValue
                 viewModel.validPassword(password)
             },
-            maxLines = 1,
-            label = { Text(text = "Senha") },
+            labelText = R.string.password_text,
             isError = !validPassword,
-            placeholder = { Text(text = "Senha") },
-            colors = TextFieldDefaults.colors(
-                focusedTextColor = Color.Blue,
-            ),
-            enabled = !loading
+            enabled = !loading,
+            type = TextFieldType.Password
         )
 
-        Button(
-            modifier = Modifier
-                .padding(10.dp)
-                .widthIn(min = 150.dp),
+        ButtonCustom(
             onClick = {
                 viewModel.createNewAccount(
                     UserModel(
@@ -154,19 +141,8 @@ private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) 
                     )
                 )
             },
-        ) {
-            if (loading) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .size(ButtonDefaults.IconSize),
-                    color = Color.White,
-                    strokeWidth = 2.dp
-                )
-            } else {
-                Text(
-                    text = "Registrar",
-                )
-            }
-        }
+            text = R.string.register_button,
+            loading = loading
+        )
     }
 }
