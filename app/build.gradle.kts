@@ -91,4 +91,5 @@ dependencies {
 
     //Dependencia para fazer load de imagem vinda da internet
     implementation(libs.coil.compose)
+    implementation(libs.coil.network)
 }
