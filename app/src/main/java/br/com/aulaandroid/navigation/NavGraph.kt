@@ -26,7 +26,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun NavGraph(){
     val navController = rememberNavController()
-    var bottomSheetIsOpen = rememberSaveable { mutableStateOf(false) }
+    val bottomSheetIsOpen = rememberSaveable { mutableStateOf(false) }
     val errorMessage = remember { mutableStateOf("") }
 
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -61,7 +61,15 @@ fun NavGraph(){
                     }
 
                     composable<Route.HomeScreen> {
-                        HomeScreen(koinViewModel())
+                        HomeScreen(koinViewModel()) { state->
+                            when(state){
+                                is AulaAndroidState.Error -> {
+                                    errorMessage.value = state.message
+                                    bottomSheetIsOpen.value = true
+                                }
+                                is AulaAndroidState.Navigate -> navController.navigate(state.route)
+                            }
+                        }
                     }
                 }
             }

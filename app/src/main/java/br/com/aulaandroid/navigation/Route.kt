@@ -10,4 +10,6 @@ sealed class Route {
     object NewAccountScreen : Route()
     @Serializable
     object HomeScreen : Route()
+    @Serializable
+    object DetailScreen : Route()
 }

@@ -17,4 +17,15 @@ class GithubNetworkingImpl(
             RequestHandler.Failure(Exception("Falha ao consultar"))
         }
     }
+
+    override suspend fun getUserDetail(login: String): RequestHandler {
+        return try {
+            githubApi.getUserDetail(login)
+                .run {
+                    RequestHandler.Success(this)
+                }
+        }catch (ex: Exception){
+            RequestHandler.Failure(Exception("Falha ao buscar detalhes de usuário"))
+        }
+    }
 }
