@@ -32,12 +32,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import br.com.aulaandroid.R
+import br.com.aulaandroid.navigation.AulaAndroidState
 import br.com.aulaandroid.ui.theme.MyBlue
 
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel) {
+fun HomeScreen(
+    viewModel: HomeViewModel,
+    onEvent: (AulaAndroidState) -> Unit
+    ) {
+    Content(viewModel, onEvent)
+}
 
+@Composable
+private fun Content(viewModel: HomeViewModel, onEvent: (AulaAndroidState) -> Unit){
     var search by remember { mutableStateOf("") }
     val homeState =  viewModel.homeState.collectAsState().value
 
@@ -112,5 +120,4 @@ fun HomeScreen(viewModel: HomeViewModel) {
             }
         }
     }
-
 }
