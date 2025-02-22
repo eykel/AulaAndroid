@@ -21,6 +21,7 @@ Throughout the development process, the focus is on adhering to best development
 - **Retrofit**
 - **Room**
 - **Firebase**
+- **Koin**
 
 ---
 
@@ -47,4 +48,5 @@ Durante o processo de desenvolvimento, o foco está em observar os melhores padr
 - **Retrofit**
 - **Room**
 - **Firebase**
+- **Koin**
 
