@@ -1,4 +1,9 @@
 package br.com.aulaandroid.ui.detail
 
-class DetailScreen {
+import androidx.compose.runtime.Composable
+import br.com.aulaandroid.navigation.AulaAndroidState
+
+@Composable
+fun DetailScreen(viewModel: DetailViewModel, onEvent: (AulaAndroidState) -> Unit) {
+
 }

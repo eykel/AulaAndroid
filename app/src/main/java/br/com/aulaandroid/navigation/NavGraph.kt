@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.com.aulaandroid.ui.components.BottomSheetV1
+import br.com.aulaandroid.ui.detail.DetailScreen
 import br.com.aulaandroid.ui.home.HomeScreen
 import br.com.aulaandroid.ui.login.LoginScreen
 import br.com.aulaandroid.ui.newAccount.NewAccountScreen
@@ -37,7 +38,7 @@ fun NavGraph(){
             Column(Modifier.padding(innerPadding)) {
                 NavHost(navController, startDestination = Route.LoginScreen) {
                     composable<Route.LoginScreen> {
-                        LoginScreen(koinViewModel()){ state->
+                        LoginScreen(koinViewModel()){ state ->
                             when(state){
                                 is AulaAndroidState.Error -> {
                                     errorMessage.value = state.message
@@ -61,7 +62,19 @@ fun NavGraph(){
                     }
 
                     composable<Route.HomeScreen> {
-                        HomeScreen(koinViewModel()) { state->
+                        HomeScreen(koinViewModel()) { state ->
+                            when(state){
+                                is AulaAndroidState.Error -> {
+                                    errorMessage.value = state.message
+                                    bottomSheetIsOpen.value = true
+                                }
+                                is AulaAndroidState.Navigate -> navController.navigate(state.route)
+                            }
+                        }
+                    }
+
+                    composable<Route.DetailScreen> {
+                        DetailScreen(koinViewModel()){ state ->
                             when(state){
                                 is AulaAndroidState.Error -> {
                                     errorMessage.value = state.message
