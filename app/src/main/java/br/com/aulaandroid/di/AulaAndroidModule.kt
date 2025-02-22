@@ -15,6 +15,7 @@ import br.com.aulaandroid.data.networking.impl.NewAccountNetworkingImpl
 import br.com.aulaandroid.data.repository.GithubRepository
 import br.com.aulaandroid.data.repository.impl.GithubRepositoryImpl
 import br.com.aulaandroid.data.service.GithubApi
+import br.com.aulaandroid.ui.detail.DetailViewModel
 import br.com.aulaandroid.ui.home.HomeViewModel
 import br.com.aulaandroid.ui.newAccount.NewAccountViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -31,7 +32,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlin.math.sin
 
 
 val aulaAndroidModule = module {
@@ -50,6 +50,7 @@ val aulaAndroidModule = module {
     viewModel { LoginViewModel(get()) }
     viewModel { NewAccountViewModel(get()) }
     viewModel { HomeViewModel(get()) }
+    viewModel { DetailViewModel(get()) }
 }
 
 val apiModule = module {
