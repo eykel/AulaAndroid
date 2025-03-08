@@ -1,5 +1,7 @@
 package br.com.aulaandroid.ui.home
 
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,17 +21,24 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 
 @Composable
-fun HomeItem(user: GithubUser){
+fun HomeItem(user: GithubUser, onItemClick: (String) -> Unit = {}){
     Row(
-        modifier = Modifier.fillMaxWidth().height(60.dp),
-        verticalAlignment = Alignment.CenterVertically
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(60.dp)
+            .clickable {
+                onItemClick(user.userName)
+            },
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(user.avatarImage)
                 .build(),
             contentDescription = "",
-            modifier = Modifier.padding(6.dp).clip(CircleShape),
+            modifier = Modifier
+                .padding(6.dp)
+                .clip(CircleShape),
             fallback = painterResource(id = R.drawable.user_circle),
             error = painterResource(id = R.drawable.user_circle)
         )

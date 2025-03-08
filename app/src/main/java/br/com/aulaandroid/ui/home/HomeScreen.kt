@@ -33,6 +33,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import br.com.aulaandroid.R
 import br.com.aulaandroid.navigation.AulaAndroidState
+import br.com.aulaandroid.navigation.Route
 import br.com.aulaandroid.ui.theme.MyBlue
 
 
@@ -40,7 +41,7 @@ import br.com.aulaandroid.ui.theme.MyBlue
 fun HomeScreen(
     viewModel: HomeViewModel,
     onEvent: (AulaAndroidState) -> Unit
-    ) {
+) {
     Content(viewModel, onEvent)
 }
 
@@ -110,7 +111,9 @@ private fun Content(viewModel: HomeViewModel, onEvent: (AulaAndroidState) -> Uni
             is HomeState.Success -> {
                 LazyColumn {
                     items(homeState.result.users) { user ->
-                        HomeItem(user)
+                        HomeItem(user){
+                            onEvent.invoke(AulaAndroidState.Navigate(Route.DetailScreen(it)))
+                        }
                     }
                 }
             }
