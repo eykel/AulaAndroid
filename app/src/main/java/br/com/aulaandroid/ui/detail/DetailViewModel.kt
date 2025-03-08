@@ -19,11 +19,11 @@ class DetailViewModel(val repository: GithubRepository) : ViewModel() {
         viewModelScope.launch {
             when (val result = repository.getUserDetail(login)) {
                 is RequestHandler.Failure -> {
-                    Log.d("TAG", "getUserDetail: ${result.ex}")
+                    Log.d("PASSEI AQUI", "getUserDetail: ${result.ex}")
                 }
 
                 is RequestHandler.Success -> {
-                    Log.d("TAG", "getUserDetail: ${result.result}")
+                    Log.d("PASSEI AQUI", "getUserDetail: ${result.result}")
                     _detailState.value = DetailState.Success(result.result as UserDetailModel)
                 }
             }
