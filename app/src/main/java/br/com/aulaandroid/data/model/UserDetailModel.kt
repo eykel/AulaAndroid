@@ -6,15 +6,15 @@ data class UserDetailModel(
     @SerializedName("id")
     val id : Int = 0,
     @SerializedName("name")
-    val nickName: String = "",
+    val nickName: String? = null,
     @SerializedName("login")
-    var login: String = "",
+    val login: String? = null,
     @SerializedName("avatar_url")
-    var avatar: String = "",
+    val avatar: String? = null,
     @SerializedName("location")
-    var location: String = "",
+    val location: String? = null,
     @SerializedName("bio")
-    var bio: String = "",
+    val bio: String? = null,
     @SerializedName("email")
-    var email: String = ""
+    val email: String? = null
 )
