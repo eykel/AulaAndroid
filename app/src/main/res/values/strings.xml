@@ -13,4 +13,12 @@
     <string name="show_password_content_description">Show password</string>
     <string name="birthday_text">Data de Nascimento</string>
     <string name="register_button">Registrar</string>
+    <string name="user_image_desc">Imagem do usuário</string>
+    <string name="user_login_title">Login do jovem</string>
+    <string name="user_nick_title">Nick do jovem</string>
+    <string name="user_location_title">Localidade do jovem</string>
+    <string name="user_bio_title">Biografia do jovem</string>
+    <string name="user_email_title">Email do jovem</string>
+    <string name="favorite_icon_desc">Icon de favorito</string>
+    <string name="share_icon_desc">Icon de compartilhar</string>
 </resources>
