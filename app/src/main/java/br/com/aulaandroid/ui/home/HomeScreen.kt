@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import br.com.aulaandroid.R
 import br.com.aulaandroid.navigation.AulaAndroidState
 import br.com.aulaandroid.navigation.Route
+import br.com.aulaandroid.ui.components.GenericError
 import br.com.aulaandroid.ui.theme.MyBlue
 
 
@@ -118,8 +119,8 @@ private fun Content(viewModel: HomeViewModel, onEvent: (AulaAndroidState) -> Uni
                 }
             }
             is HomeState.Failure -> {
-                //TODO
-                // Caso haja falha, exibe alguma coisa.
+                GenericError()
+                onEvent.invoke(AulaAndroidState.Error(homeState.ex.message.orEmpty()))
             }
         }
     }

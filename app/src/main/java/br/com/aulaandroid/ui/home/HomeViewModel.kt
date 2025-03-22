@@ -22,6 +22,7 @@ class HomeViewModel(val repository: GithubRepository) : ViewModel() {
                 when(val result = repository.getUserList(param)){
                     is RequestHandler.Failure -> {
                         Log.d("TAG", "getUserList: ${result.ex}")
+                        _homeState.value = HomeState.Failure(result.ex)
                     }
                     is RequestHandler.Success -> {
                         Log.d("TAG", "getUserList: ${result.result}")
