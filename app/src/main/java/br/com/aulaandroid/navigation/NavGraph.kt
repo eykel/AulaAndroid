@@ -1,6 +1,5 @@
 package br.com.aulaandroid.navigation
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,8 +27,9 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavGraph(){
-    Log.d("PASSEI AQUI", "PASSEI AQUI : NAVHOST")
     val navController = rememberNavController()
+    //Bottomsheet problemática, se eu usar remember, ele trava a tela, se eu utiliza
+    //rememberSaveable, ele nunca mais volta.
     val bottomSheetIsOpen = rememberSaveable { mutableStateOf(false) }
     val errorMessage = remember { mutableStateOf("") }
 
@@ -41,7 +41,6 @@ fun NavGraph(){
             Column(Modifier.padding(innerPadding)) {
                 NavHost(navController, startDestination = Route.LoginScreen) {
                     composable<Route.LoginScreen> {
-                        Log.d("PASSEI AQUI", "PASSEI AQUI : Login")
                         LoginScreen(koinViewModel()){ state ->
                             when(state){
                                 is AulaAndroidState.Error -> {
@@ -49,7 +48,6 @@ fun NavGraph(){
                                     bottomSheetIsOpen.value = true
                                 }
                                 is AulaAndroidState.Navigate -> {
-                                    Log.d("PASSEI AQUI", "PASSEI AQUI : NAVEGUEI PRO LOGIN")
                                     navController.navigate(state.route)
                                 }
                             }
@@ -57,7 +55,6 @@ fun NavGraph(){
                     }
 
                     composable<Route.NewAccountScreen> {
-                        Log.d("PASSEI AQUI", "PASSEI AQUI : NewAccountScreen")
                         NewAccountScreen(koinViewModel()) { state ->
                             when(state){
                                 is AulaAndroidState.Error -> {
@@ -70,7 +67,6 @@ fun NavGraph(){
                     }
 
                     composable<Route.HomeScreen> {
-                        Log.d("PASSEI AQUI", "PASSEI AQUI : HOME")
                         HomeScreen(koinViewModel()) { state ->
                             when(state){
                                 is AulaAndroidState.Error -> {
@@ -83,7 +79,6 @@ fun NavGraph(){
                     }
 
                     composable<Route.DetailScreen> { backStackEntry ->
-                        Log.d("PASSEI AQUI", "PASSEI AQUI : DETAIL")
                         val param: Route.DetailScreen = backStackEntry.toRoute()
                         DetailScreen(koinViewModel(), param.nickName){ state ->
                             when(state){

@@ -21,4 +21,6 @@
     <string name="user_email_title">Email do jovem</string>
     <string name="favorite_icon_desc">Icon de favorito</string>
     <string name="share_icon_desc">Icon de compartilhar</string>
+    <string name="error_title">Houve um erro por aqui</string>
+    <string name="error_desc">Tivemos um erro por aqui, ja estamos trabalhando para reestabelecer seu acesso e tentar novamente</string>
 </resources>
