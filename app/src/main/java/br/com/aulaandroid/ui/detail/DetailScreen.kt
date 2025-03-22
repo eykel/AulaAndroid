@@ -1,5 +1,6 @@
 package br.com.aulaandroid.ui.detail
 
+import android.content.Intent
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -28,7 +29,9 @@ import androidx.compose.ui.unit.dp
 import br.com.aulaandroid.R
 import br.com.aulaandroid.navigation.AulaAndroidState
 import br.com.aulaandroid.ui.components.ApplyStyle
+import br.com.aulaandroid.ui.components.GenericError
 import br.com.aulaandroid.ui.theme.MyBlue
+import br.com.aulaandroid.util.Constants.TEXT_TYPE
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 
@@ -44,10 +47,15 @@ fun DetailScreen(viewModel: DetailViewModel, login: String, onEvent: (AulaAndroi
             //TODO
         }
         is DetailState.Failure -> {
-            //TODO
+            GenericError()
+            //onEvent.invoke(AulaAndroidState.Error(detailState.ex.message.orEmpty()))
         }
         is DetailState.Success -> {
             val user = detailState.result
+
+
+            val context = LocalContext.current
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -92,8 +100,6 @@ fun DetailScreen(viewModel: DetailViewModel, login: String, onEvent: (AulaAndroi
                     }
                 }
 
-
-
                 Row(
                     modifier = Modifier.padding(top = 150.dp)
                 ) {
@@ -112,7 +118,9 @@ fun DetailScreen(viewModel: DetailViewModel, login: String, onEvent: (AulaAndroi
                         modifier = Modifier
                             .padding(horizontal = 10.dp)
                             .size(35.dp)
-                            .clickable { },
+                            .clickable {
+                                context.startActivity(setupSharedIntent(user.gitHubUrl))
+                            },
                         tint = MyBlue
                     )
                 }
@@ -120,5 +128,16 @@ fun DetailScreen(viewModel: DetailViewModel, login: String, onEvent: (AulaAndroi
             }
         }
     }
-
 }
+
+fun setupSharedIntent(gitHubUser: String?): Intent? =
+    Intent.createChooser(
+        Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, gitHubUser)
+            type = TEXT_TYPE
+        },
+        null
+    )
+
+

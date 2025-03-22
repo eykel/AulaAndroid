@@ -16,5 +16,7 @@ data class UserDetailModel(
     @SerializedName("bio")
     val bio: String? = null,
     @SerializedName("email")
-    val email: String? = null
+    val email: String? = null,
+    @SerializedName("url")
+    val gitHubUrl: String? = null
 )

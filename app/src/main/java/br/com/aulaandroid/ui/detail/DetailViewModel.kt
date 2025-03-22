@@ -20,6 +20,7 @@ class DetailViewModel(val repository: GithubRepository) : ViewModel() {
             when (val result = repository.getUserDetail(login)) {
                 is RequestHandler.Failure -> {
                     Log.d("PASSEI AQUI", "getUserDetail: ${result.ex}")
+                    _detailState.value = DetailState.Failure(result.ex)
                 }
 
                 is RequestHandler.Success -> {
