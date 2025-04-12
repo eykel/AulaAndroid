@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.devtools.ksp)
     id(libs.plugins.kotlin.parcelize.get().pluginId)
 }
 
@@ -92,4 +93,11 @@ dependencies {
     //Dependencia para fazer load de imagem vinda da internet
     implementation(libs.coil.compose)
     implementation(libs.coil.network)
+
+
+    //ROOM
+
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 }
