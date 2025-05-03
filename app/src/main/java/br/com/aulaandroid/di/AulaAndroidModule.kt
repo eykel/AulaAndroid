@@ -1,6 +1,10 @@
 package br.com.aulaandroid.di
 
 import android.app.Application
+import androidx.room.Room
+import br.com.aulaandroid.data.local.GitUserDataBase
+import br.com.aulaandroid.data.local.GitUserDataBase.Companion.DATABASE_NAME
+import br.com.aulaandroid.data.local.dao.UserDAO
 import br.com.aulaandroid.data.networking.GithubNetworking
 import br.com.aulaandroid.ui.login.LoginViewModel
 import br.com.aulaandroid.data.repository.LoginRepository
@@ -45,7 +49,7 @@ val aulaAndroidModule = module {
     factory<NewAccountRepository> { NewAccountRepositoryImpl(get()) }
 
     factory<GithubNetworking> { GithubNetworkingImpl(get()) }
-    factory<GithubRepository> { GithubRepositoryImpl(get()) }
+    factory<GithubRepository> { GithubRepositoryImpl(get(), get()) }
 
     viewModel { LoginViewModel(get()) }
     viewModel { NewAccountViewModel(get()) }
@@ -88,4 +92,20 @@ val retrofitModule = module {
     single { provideHttpClient(get()) }
     single { provideGson() }
     single { provideRetrofit(get(), get()) }
+}
+
+
+val dataBaseModule = module {
+    fun provideDataBase(application: Application) : GitUserDataBase {
+        return Room.databaseBuilder(application, GitUserDataBase::class.java, DATABASE_NAME)
+            .fallbackToDestructiveMigration(true)
+            .build()
+    }
+
+    fun provideDao(dataBase: GitUserDataBase) : UserDAO {
+        return dataBase.userDao()
+    }
+
+    single { provideDataBase(androidApplication()) }
+    single { provideDao(get()) }
 }
