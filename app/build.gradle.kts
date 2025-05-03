@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.devtools.ksp)
     id(libs.plugins.kotlin.parcelize.get().pluginId)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -42,9 +43,6 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
