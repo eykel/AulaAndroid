@@ -12,4 +12,8 @@ sealed class Route {
     object HomeScreen : Route()
     @Serializable
     data class DetailScreen(val nickName: String) : Route()
+    @Serializable
+    object FavoriteScreen : Route()
+    @Serializable
+    object SettingScreen : Route()
 }
