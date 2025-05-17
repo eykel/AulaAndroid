@@ -1,6 +1,5 @@
 package br.com.aulaandroid.navigation
 
-import android.content.SharedPreferences
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -13,7 +12,6 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -27,8 +25,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import br.com.aulaandroid.data.local.utils.SessionCache
-import br.com.aulaandroid.data.model.Session
 import br.com.aulaandroid.ui.components.BottomSheetV1
 import br.com.aulaandroid.ui.detail.DetailScreen
 import br.com.aulaandroid.ui.home.HomeScreen
@@ -36,7 +32,6 @@ import br.com.aulaandroid.ui.login.LoginScreen
 import br.com.aulaandroid.ui.newAccount.NewAccountScreen
 import br.com.aulaandroid.ui.theme.AulaAndroidTheme
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.inject
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,27 +43,21 @@ fun NavGraph() {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val coroutineScope = rememberCoroutineScope()
     var selectedItem by remember { mutableIntStateOf(1) }
-    //session isnt working because it need to be a remember and mutableStateOf
-    //https://stackoverflow.com/questions/69263977/why-updating-preferencemanager-doesnt-trigger-recomposition-in-jetpack-compose
-    val session : SessionCache by inject()
-
 
     AulaAndroidTheme {
         Scaffold (
             bottomBar = {
-                if(session.getActiveSession()?.logged == true){
-                    NavigationBar {
-                        topLevelRoute.forEachIndexed { index, item ->
-                            NavigationBarItem(
-                                icon = { Icon(
-                                    if (selectedItem == index) item.selectedIcon else item.unselectedIcon,
-                                    contentDescription = ""
-                                ) },
-                                label = { Text(item.name) },
-                                selected = selectedItem == index,
-                                onClick = { selectedItem = index}
-                            )
-                        }
+                NavigationBar {
+                    topLevelRoute.forEachIndexed { index, item ->
+                        NavigationBarItem(
+                            icon = { Icon(
+                                if (selectedItem == index) item.selectedIcon else item.unselectedIcon,
+                                contentDescription = ""
+                            ) },
+                            label = { Text(item.name) },
+                            selected = selectedItem == index,
+                            onClick = { selectedItem = index}
+                        )
                     }
                 }
             }

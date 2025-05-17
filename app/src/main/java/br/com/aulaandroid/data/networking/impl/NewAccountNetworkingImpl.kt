@@ -1,7 +1,5 @@
 package br.com.aulaandroid.data.networking.impl
 
-import br.com.aulaandroid.data.local.utils.SessionCache
-import br.com.aulaandroid.data.model.Session
 import br.com.aulaandroid.data.model.UserModel
 import br.com.aulaandroid.data.networking.NewAccountNetworking
 import br.com.aulaandroid.util.RequestHandler
@@ -12,8 +10,7 @@ import kotlinx.coroutines.tasks.await
 
 class NewAccountNetworkingImpl(
     private val auth: FirebaseAuth,
-    private val firestore: FirebaseFirestore,
-    private val sessionCache: SessionCache
+    private val firestore: FirebaseFirestore
 ) : NewAccountNetworking {
     override suspend fun newAccount(user: UserModel) : RequestHandler {
         return try {
@@ -38,7 +35,6 @@ class NewAccountNetworkingImpl(
                 .set(user.copy(password = null))
                 .await()
                 .run {
-                    sessionCache.saveSession(Session(user = user, logged = true))
                     RequestHandler.Success(Unit)
                 }
         } catch (ex: Exception) {

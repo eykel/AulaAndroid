@@ -19,9 +19,6 @@ firebaseFireStore = "24.8.1"
 lottieCompose = "6.5.2"
 retrofit = "2.11.0"
 coil = "3.0.4"
-dataStore = "1.1.6"
-moshiKotlin = "1.15.0"
-
 
 
 
@@ -53,10 +50,6 @@ retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = 
 retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-network = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
-data-store = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStore" }
-moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshiKotlin" }
-
-
 
 
 [plugins]
