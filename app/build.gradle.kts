@@ -94,8 +94,10 @@ dependencies {
 
 
     //ROOM
-
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+
+    //Moshi
+    implementation(libs.moshi.kotlin)
 }
