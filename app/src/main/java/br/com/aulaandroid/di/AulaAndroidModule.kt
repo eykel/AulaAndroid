@@ -1,10 +1,14 @@
 package br.com.aulaandroid.di
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import br.com.aulaandroid.data.local.GitUserDataBase
 import br.com.aulaandroid.data.local.GitUserDataBase.Companion.DATABASE_NAME
 import br.com.aulaandroid.data.local.dao.UserDAO
+import br.com.aulaandroid.data.local.utils.SessionCache
+import br.com.aulaandroid.data.local.utils.SessionCacheImpl
 import br.com.aulaandroid.data.networking.GithubNetworking
 import br.com.aulaandroid.ui.login.LoginViewModel
 import br.com.aulaandroid.data.repository.LoginRepository
@@ -38,14 +42,24 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
+const val SESSION_CACHE = "SESSION_CACHE"
+
 val aulaAndroidModule = module {
+
+    fun provideSharedPreferences(context: Application) : SharedPreferences =
+        context.getSharedPreferences(SESSION_CACHE, Context.MODE_PRIVATE)
+
+    single { provideSharedPreferences(androidApplication()) }
+
     single<FirebaseAuth> { Firebase.auth }
     single<FirebaseFirestore> { Firebase.firestore }
 
-    factory<LoginNetworking> { LoginNetworkingImpl(get()) }
+    single<SessionCache> { SessionCacheImpl(get()) }
+
+    factory<LoginNetworking> { LoginNetworkingImpl(get(), get()) }
     factory<LoginRepository> { LoginRepositoryImpl(get()) }
 
-    factory<NewAccountNetworking> { NewAccountNetworkingImpl(get(), get()) }
+    factory<NewAccountNetworking> { NewAccountNetworkingImpl(get(), get(), get()) }
     factory<NewAccountRepository> { NewAccountRepositoryImpl(get()) }
 
     factory<GithubNetworking> { GithubNetworkingImpl(get()) }
