@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -28,9 +29,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import br.com.aulaandroid.data.local.utils.SessionCache
+import br.com.aulaandroid.data.local.utils.SessionManager
 import br.com.aulaandroid.data.model.Session
 import br.com.aulaandroid.ui.components.BottomSheetV1
 import br.com.aulaandroid.ui.detail.DetailScreen
+import br.com.aulaandroid.ui.favorite.FavoriteScreen
 import br.com.aulaandroid.ui.home.HomeScreen
 import br.com.aulaandroid.ui.login.LoginScreen
 import br.com.aulaandroid.ui.newAccount.NewAccountScreen
@@ -50,13 +53,14 @@ fun NavGraph() {
     var selectedItem by remember { mutableIntStateOf(1) }
     //session isnt working because it need to be a remember and mutableStateOf
     //https://stackoverflow.com/questions/69263977/why-updating-preferencemanager-doesnt-trigger-recomposition-in-jetpack-compose
-    val session : SessionCache by inject()
+    val sessionManager: SessionManager by inject()
+    val sessionState by sessionManager.session.collectAsState()
 
 
     AulaAndroidTheme {
         Scaffold (
             bottomBar = {
-                if(session.getActiveSession()?.logged == true){
+                if(sessionState?.logged == true){
                     NavigationBar {
                         topLevelRoute.forEachIndexed { index, item ->
                             NavigationBarItem(
@@ -135,6 +139,26 @@ fun NavGraph() {
                     composable<Route.DetailScreen> { backStackEntry ->
                         val param: Route.DetailScreen = backStackEntry.toRoute()
                         DetailScreen(koinViewModel(), param.nickName) { state ->
+                            handleScreenState(
+                                state = state,
+                                navController = navController,
+                                updateErrorMessage = { message -> errorMessage = message },
+                                updateBottomSheetState = { isOpen ->
+                                    if (isOpen) {
+                                        coroutineScope.launch {
+                                            sheetState.show()
+                                        }
+                                    }
+                                    bottomSheetIsOpen = isOpen
+                                },
+                                sheetState = sheetState,
+                            )
+                        }
+                    }
+
+                    composable<Route.FavoriteScreen> { backStackEntry ->
+                        val param: Route.FavoriteScreen = backStackEntry.toRoute()
+                        FavoriteScreen(koinViewModel()) { state ->
                             handleScreenState(
                                 state = state,
                                 navController = navController,

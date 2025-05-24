@@ -1,6 +1,7 @@
 package br.com.aulaandroid.data.networking.impl
 
 import br.com.aulaandroid.data.local.utils.SessionCache
+import br.com.aulaandroid.data.local.utils.SessionManager
 import br.com.aulaandroid.data.model.Session
 import br.com.aulaandroid.data.model.UserModel
 import br.com.aulaandroid.data.networking.LoginNetworking
@@ -10,7 +11,7 @@ import kotlinx.coroutines.tasks.await
 
 class LoginNetworkingImpl(
     private val auth: FirebaseAuth,
-    private val sessionCache: SessionCache
+    private val sessionManager: SessionManager
 ) : LoginNetworking {
     override suspend fun login(email: String, password: String) : RequestHandler {
         return try {
@@ -19,9 +20,10 @@ class LoginNetworkingImpl(
                 .run {
                     this.user?.uid?.let {
                         //save user session just with email.
-                        sessionCache.saveSession(
+                        sessionManager.saveSession(
                             Session(
-                                UserModel.getUserModel(email = email)
+                                UserModel.getUserModel(email = email),
+                                logged = true
                             )
                         )
                         RequestHandler.Success(Unit)

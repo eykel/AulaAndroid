@@ -9,6 +9,7 @@ import br.com.aulaandroid.data.local.GitUserDataBase.Companion.DATABASE_NAME
 import br.com.aulaandroid.data.local.dao.UserDAO
 import br.com.aulaandroid.data.local.utils.SessionCache
 import br.com.aulaandroid.data.local.utils.SessionCacheImpl
+import br.com.aulaandroid.data.local.utils.SessionManager
 import br.com.aulaandroid.data.networking.GithubNetworking
 import br.com.aulaandroid.ui.login.LoginViewModel
 import br.com.aulaandroid.data.repository.LoginRepository
@@ -55,6 +56,8 @@ val aulaAndroidModule = module {
     single<FirebaseFirestore> { Firebase.firestore }
 
     single<SessionCache> { SessionCacheImpl(get()) }
+
+    single { SessionManager(get()) }
 
     factory<LoginNetworking> { LoginNetworkingImpl(get(), get()) }
     factory<LoginRepository> { LoginRepositoryImpl(get()) }
