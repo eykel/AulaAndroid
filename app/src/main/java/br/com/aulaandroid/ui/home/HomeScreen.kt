@@ -88,7 +88,6 @@ private fun Content(viewModel: HomeViewModel, onEvent: (AulaAndroidState) -> Uni
 
         when(homeState){
             HomeState.Default -> {
-
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,

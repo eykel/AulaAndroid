@@ -1,6 +1,7 @@
 package br.com.aulaandroid.data.repository.impl
 
 import br.com.aulaandroid.data.local.dao.UserDAO
+import br.com.aulaandroid.data.model.UserDetailModel
 import br.com.aulaandroid.data.networking.GithubNetworking
 import br.com.aulaandroid.data.repository.GithubRepository
 import br.com.aulaandroid.util.RequestHandler
@@ -22,6 +23,17 @@ class GithubRepositoryImpl(
                 }
         }catch (ex: Exception){
             RequestHandler.Failure(Exception("Falha ao buscar lista de favoritos"))
+        }
+    }
+
+    override suspend fun setFavorite(userId: Int, favorite: Boolean) : RequestHandler {
+        return try {
+            mDatabase.setFavorite(userId, favorite)
+                .run {
+                    RequestHandler.Success(true)
+                }
+        }catch (ex: Exception){
+            RequestHandler.Failure(Exception("Falha ao salvar favorito"))
         }
     }
 }

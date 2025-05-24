@@ -42,6 +42,13 @@ fun DetailScreen(viewModel: DetailViewModel, login: String, onEvent: (AulaAndroi
         viewModel.getUserDetail(login)
     }
 
+    Content(viewModel, onEvent)
+}
+
+@Composable
+private fun Content(viewModel: DetailViewModel, onEvent: (AulaAndroidState) -> Unit) {
+
+
     when(val detailState =  viewModel.detailState.collectAsState().value) {
         DetailState.Default -> {
             //TODO
@@ -109,7 +116,9 @@ fun DetailScreen(viewModel: DetailViewModel, login: String, onEvent: (AulaAndroi
                         modifier = Modifier
                             .padding(horizontal = 10.dp)
                             .size(35.dp)
-                            .clickable { },
+                            .clickable {
+                                viewModel.favoriteUser(user)
+                            },
                         tint = MyBlue
                     )
                     Icon(

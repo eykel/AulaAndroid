@@ -18,5 +18,6 @@ data class UserDetailModel(
     @SerializedName("email")
     val email: String? = null,
     @SerializedName("url")
-    val gitHubUrl: String? = null
+    val gitHubUrl: String? = null,
+    var favorite: Boolean = false
 )

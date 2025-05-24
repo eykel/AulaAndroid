@@ -15,6 +15,9 @@ class DetailViewModel(val repository: GithubRepository) : ViewModel() {
     private val _detailState = MutableStateFlow<DetailState>(DetailState.Default)
     val detailState = _detailState.asStateFlow()
 
+    private val _updatedFavorite = MutableStateFlow<Boolean>(false)
+    val updatedFavorite = _updatedFavorite.asStateFlow()
+
     fun getUserDetail(login: String){
         viewModelScope.launch {
             when (val result = repository.getUserDetail(login)) {
@@ -26,6 +29,19 @@ class DetailViewModel(val repository: GithubRepository) : ViewModel() {
                 is RequestHandler.Success -> {
                     Log.d("PASSEI AQUI", "getUserDetail: ${result.result}")
                     _detailState.value = DetailState.Success(result.result as UserDetailModel)
+                }
+            }
+        }
+    }
+
+    fun favoriteUser(user: UserDetailModel){
+        viewModelScope.launch {
+            when(repository.setFavorite(user.id, !user.favorite)){
+                is RequestHandler.Failure -> {
+                    _updatedFavorite.value = false
+                }
+                is RequestHandler.Success -> {
+                    _updatedFavorite.value = true
                 }
             }
         }

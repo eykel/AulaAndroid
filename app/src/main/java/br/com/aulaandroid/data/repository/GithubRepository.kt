@@ -1,5 +1,6 @@
 package br.com.aulaandroid.data.repository
 
+import br.com.aulaandroid.data.model.UserDetailModel
 import br.com.aulaandroid.util.RequestHandler
 
 interface GithubRepository {
@@ -9,4 +10,6 @@ interface GithubRepository {
     suspend fun getUserDetail(login: String): RequestHandler
 
     suspend fun getFavoriteList() : RequestHandler
+
+    suspend fun setFavorite(userId: Int, favorite: Boolean) : RequestHandler
 }
