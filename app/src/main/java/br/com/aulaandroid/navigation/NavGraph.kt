@@ -28,9 +28,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import br.com.aulaandroid.data.local.utils.SessionCache
 import br.com.aulaandroid.data.local.utils.SessionManager
-import br.com.aulaandroid.data.model.Session
 import br.com.aulaandroid.ui.components.BottomSheetV1
 import br.com.aulaandroid.ui.detail.DetailScreen
 import br.com.aulaandroid.ui.favorite.FavoriteScreen
@@ -70,7 +68,10 @@ fun NavGraph() {
                                 ) },
                                 label = { Text(item.name) },
                                 selected = selectedItem == index,
-                                onClick = { selectedItem = index}
+                                onClick = {
+                                    navController.navigate(route = item.route)
+                                    selectedItem = index
+                                }
                             )
                         }
                     }
@@ -78,7 +79,7 @@ fun NavGraph() {
             }
         ) { innerPadding ->
             Column(Modifier.padding(innerPadding)) {
-                NavHost(navController, startDestination = Route.LoginScreen) {
+                NavHost(navController, startDestination = if(sessionState?.logged == true) Route.HomeScreen else Route.LoginScreen) {
                     composable<Route.LoginScreen> {
                         LoginScreen(koinViewModel()) { state ->
                             handleScreenState(
@@ -157,7 +158,6 @@ fun NavGraph() {
                     }
 
                     composable<Route.FavoriteScreen> { backStackEntry ->
-                        val param: Route.FavoriteScreen = backStackEntry.toRoute()
                         FavoriteScreen(koinViewModel()) { state ->
                             handleScreenState(
                                 state = state,

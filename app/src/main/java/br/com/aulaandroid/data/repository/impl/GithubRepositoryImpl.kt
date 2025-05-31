@@ -1,5 +1,6 @@
 package br.com.aulaandroid.data.repository.impl
 
+import android.util.Log
 import br.com.aulaandroid.data.local.dao.UserDAO
 import br.com.aulaandroid.data.model.UserDetailModel
 import br.com.aulaandroid.data.networking.GithubNetworking
@@ -22,6 +23,7 @@ class GithubRepositoryImpl(
                     RequestHandler.Success(this)
                 }
         }catch (ex: Exception){
+            Log.e("ERROR", "message: ${ex.message} -- cause ${ex.cause} -- stackTrace: ${ex.stackTrace}")
             RequestHandler.Failure(Exception("Falha ao buscar lista de favoritos"))
         }
     }
@@ -33,6 +35,7 @@ class GithubRepositoryImpl(
                     RequestHandler.Success(true)
                 }
         }catch (ex: Exception){
+            Log.e("ERROR", "message: ${ex.message} -- cause ${ex.cause} -- stackTrace: ${ex.stackTrace}")
             RequestHandler.Failure(Exception("Falha ao salvar favorito"))
         }
     }

@@ -1,5 +1,6 @@
 package br.com.aulaandroid.data.networking.impl
 
+import android.util.Log
 import br.com.aulaandroid.data.networking.GithubNetworking
 import br.com.aulaandroid.data.service.GithubApi
 import br.com.aulaandroid.util.RequestHandler
@@ -14,6 +15,7 @@ class GithubNetworkingImpl(
                     RequestHandler.Success(this)
                 }
         }catch (ex: Exception){
+            Log.e("ERROR", "message: ${ex.message} -- cause ${ex.cause} -- stackTrace: ${ex.stackTrace}")
             RequestHandler.Failure(Exception("Falha ao consultar"))
         }
     }
@@ -25,6 +27,7 @@ class GithubNetworkingImpl(
                     RequestHandler.Success(this)
                 }
         }catch (ex: Exception){
+            Log.e("ERROR", "message: ${ex.message} -- cause ${ex.cause} -- stackTrace: ${ex.stackTrace}")
             RequestHandler.Failure(Exception("Falha ao buscar detalhes de usuário"))
         }
     }

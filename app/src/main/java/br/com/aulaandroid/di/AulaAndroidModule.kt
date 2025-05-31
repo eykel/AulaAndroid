@@ -25,6 +25,7 @@ import br.com.aulaandroid.data.repository.GithubRepository
 import br.com.aulaandroid.data.repository.impl.GithubRepositoryImpl
 import br.com.aulaandroid.data.service.GithubApi
 import br.com.aulaandroid.ui.detail.DetailViewModel
+import br.com.aulaandroid.ui.favorite.FavoriteViewModel
 import br.com.aulaandroid.ui.home.HomeViewModel
 import br.com.aulaandroid.ui.newAccount.NewAccountViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -72,6 +73,7 @@ val aulaAndroidModule = module {
     viewModel { NewAccountViewModel(get()) }
     viewModel { HomeViewModel(get()) }
     viewModel { DetailViewModel(get()) }
+    viewModel { FavoriteViewModel(get()) }
 }
 
 val apiModule = module {

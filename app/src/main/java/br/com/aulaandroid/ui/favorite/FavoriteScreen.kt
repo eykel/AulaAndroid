@@ -12,6 +12,7 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,6 +30,10 @@ fun FavoriteScreen(
     viewModel: FavoriteViewModel,
     onEvent: (AulaAndroidState) -> Unit
 ) {
+    LaunchedEffect(Unit) {
+        viewModel.getFavoriteList()
+    }
+
     Content(viewModel, onEvent)
 }
 
@@ -64,7 +69,7 @@ fun Content(viewModel: FavoriteViewModel,onEvent: (AulaAndroidState) -> Unit){
         }
         is FavoriteState.Success -> {
             LazyColumn {
-                items(favoriteState.result.users) {
+                items(favoriteState.result) {
                     HomeItem(it){
                         onEvent.invoke(AulaAndroidState.Navigate(Route.DetailScreen(it)))
                     }
@@ -72,7 +77,4 @@ fun Content(viewModel: FavoriteViewModel,onEvent: (AulaAndroidState) -> Unit){
             }
         }
     }
-
-
-
 }

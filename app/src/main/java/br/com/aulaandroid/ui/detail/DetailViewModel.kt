@@ -27,8 +27,8 @@ class DetailViewModel(val repository: GithubRepository) : ViewModel() {
                 }
 
                 is RequestHandler.Success -> {
-                    Log.d("PASSEI AQUI", "getUserDetail: ${result.result}")
-                    _detailState.value = DetailState.Success(result.result as UserDetailModel)
+                    Log.d("PASSEI AQUI", "getUserDetail: ${result.content}")
+                    _detailState.value = DetailState.Success(result.content as UserDetailModel)
                 }
             }
         }

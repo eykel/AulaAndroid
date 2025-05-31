@@ -23,7 +23,7 @@ interface UserDAO {
     fun getAll(): List<GithubUser>
 
     @Query("SELECT * FROM User WHERE favorite = 1")
-    fun getFavorites(): List<GithubUser>
+    suspend fun getFavorites(): List<GithubUser>
 
     @Query("UPDATE User SET favorite = :favorite WHERE id = :id")
     fun setFavorite(id: Int, favorite: Boolean)

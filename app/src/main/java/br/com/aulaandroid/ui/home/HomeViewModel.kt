@@ -25,8 +25,8 @@ class HomeViewModel(val repository: GithubRepository) : ViewModel() {
                         _homeState.value = HomeState.Failure(result.ex)
                     }
                     is RequestHandler.Success -> {
-                        Log.d("TAG", "getUserList: ${result.result}")
-                        _homeState.value = HomeState.Success(result.result as GithubUserList)
+                        Log.d("TAG", "getUserList: ${result.content}")
+                        _homeState.value = HomeState.Success(result.content as GithubUserList)
                     }
                 }
             }else{

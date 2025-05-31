@@ -50,3 +50,18 @@ Durante o processo de desenvolvimento, o foco está em observar os melhores padr
 - **Firebase**
 - **Koin**
 
+
+## Next
+- **Para proxima aula**
+
+Precisamos tratar o resultado da lista de favoritos, tratar o cast, tratar a lista vazia.
+Precisamos abstrair nosso log de erro
+Precisamos passar suspend para todas as funções do banco de dados.
+
+- **Implement favoriteScreen**
+- **Implement settingsScreen**
+- **Logout user**
+- **Fix bottomSheet**
+- **Fix general project (strings, erros, format, remove TODO)**
+- **Review Architecture**
+- **Publish app on playStore**
