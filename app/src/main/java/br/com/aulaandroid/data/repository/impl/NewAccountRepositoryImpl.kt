@@ -9,7 +9,7 @@ class NewAccountRepositoryImpl(
     private val networking: NewAccountNetworking
 ) : NewAccountRepository {
 
-    override suspend fun newAccount(user: UserModel) : RequestHandler =
+    override suspend fun newAccount(user: UserModel) : RequestHandler<Unit> =
         networking.newAccount(user)
 
 }

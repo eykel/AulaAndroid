@@ -15,7 +15,7 @@ class NewAccountNetworkingImpl(
     private val firestore: FirebaseFirestore,
     private val sessionCache: SessionCache
 ) : NewAccountNetworking {
-    override suspend fun newAccount(user: UserModel) : RequestHandler {
+    override suspend fun newAccount(user: UserModel) : RequestHandler<Unit> {
         return try {
             auth.createUserWithEmailAndPassword(user.email, user.password.orEmpty())
                 .await()
@@ -30,7 +30,7 @@ class NewAccountNetworkingImpl(
     }
 
 
-    private suspend fun createUserOnFireStore(userId: String, user: UserModel) : RequestHandler{
+    private suspend fun createUserOnFireStore(userId: String, user: UserModel) : RequestHandler<Unit>{
         return try {
             firestore
                 .collection(USERS_TABLE_FIRESTORE)

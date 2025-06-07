@@ -5,5 +5,5 @@ import br.com.aulaandroid.util.RequestHandler
 
 interface NewAccountNetworking {
 
-    suspend fun newAccount(user: UserModel) : RequestHandler
+    suspend fun newAccount(user: UserModel) : RequestHandler<Unit>
 }

@@ -13,7 +13,7 @@ class LoginNetworkingImpl(
     private val auth: FirebaseAuth,
     private val sessionManager: SessionManager
 ) : LoginNetworking {
-    override suspend fun login(email: String, password: String) : RequestHandler {
+    override suspend fun login(email: String, password: String) : RequestHandler<Unit> {
         return try {
             auth.signInWithEmailAndPassword(email, password)
                 .await()
