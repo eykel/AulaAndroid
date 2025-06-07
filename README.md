@@ -54,9 +54,8 @@ Durante o processo de desenvolvimento, o foco está em observar os melhores padr
 ## Next
 - **Para proxima aula**
 
-Precisamos tratar o resultado da lista de favoritos, tratar o cast, tratar a lista vazia.
+Atualizar na nossa home, se foi favoritado ou não
 Precisamos abstrair nosso log de erro
-Precisamos passar suspend para todas as funções do banco de dados.
 
 - **Implement favoriteScreen**
 - **Implement settingsScreen**
