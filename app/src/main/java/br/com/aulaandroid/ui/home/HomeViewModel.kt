@@ -3,7 +3,7 @@ package br.com.aulaandroid.ui.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.aulaandroid.data.model.GithubUserList
+import br.com.aulaandroid.data.model.GithubUser
 import br.com.aulaandroid.data.repository.GithubRepository
 import br.com.aulaandroid.util.RequestHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,6 +14,9 @@ class HomeViewModel(val repository: GithubRepository) : ViewModel() {
 
     private val _homeState = MutableStateFlow<HomeState>(HomeState.Default)
     val homeState = _homeState.asStateFlow()
+
+    private val _updatedFavorite = MutableStateFlow<Boolean>(false)
+    val updatedFavorite = _updatedFavorite.asStateFlow()
 
 
     fun getUserList(param: String){
@@ -26,11 +29,25 @@ class HomeViewModel(val repository: GithubRepository) : ViewModel() {
                     }
                     is RequestHandler.Success -> {
                         Log.d("TAG", "getUserList: ${result.content}")
-                        _homeState.value = HomeState.Success(result.content as GithubUserList)
+                        _homeState.value = HomeState.Success(result.content)
                     }
                 }
             }else{
                 _homeState.value = HomeState.Default
+            }
+        }
+    }
+
+    fun updateFavorite(user: GithubUser){
+        viewModelScope.launch {
+            when(val result = repository.setFavorite(user)){
+                is RequestHandler.Failure -> {
+                    _updatedFavorite.value = false
+                }
+                is RequestHandler.Success -> {
+                    //updateList(result.content)
+                    //Atualizar na nossa home, se foi favoritado ou não
+                }
             }
         }
     }

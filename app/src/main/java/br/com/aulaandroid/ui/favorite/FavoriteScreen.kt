@@ -70,9 +70,11 @@ fun Content(viewModel: FavoriteViewModel,onEvent: (AulaAndroidState) -> Unit){
         is FavoriteState.Success -> {
             LazyColumn {
                 items(favoriteState.result) {
-                    HomeItem(it){
-                        onEvent.invoke(AulaAndroidState.Navigate(Route.DetailScreen(it)))
-                    }
+                    HomeItem(
+                        it,
+                        { onEvent.invoke(AulaAndroidState.Navigate(Route.DetailScreen(it))) },
+                        { viewModel.updateFavorite(it) }
+                    )
                 }
             }
         }
