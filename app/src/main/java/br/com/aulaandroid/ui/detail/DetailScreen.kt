@@ -111,17 +111,6 @@ private fun Content(viewModel: DetailViewModel, onEvent: (AulaAndroidState) -> U
                     modifier = Modifier.padding(top = 150.dp)
                 ) {
                     Icon(
-                        Icons.Outlined.Favorite,
-                        stringResource(R.string.favorite_icon_desc),
-                        modifier = Modifier
-                            .padding(horizontal = 10.dp)
-                            .size(35.dp)
-                            .clickable {
-                                viewModel.favoriteUser(user)
-                            },
-                        tint = MyBlue
-                    )
-                    Icon(
                         Icons.Outlined.Share,
                         stringResource(R.string.share_icon_desc),
                         modifier = Modifier
