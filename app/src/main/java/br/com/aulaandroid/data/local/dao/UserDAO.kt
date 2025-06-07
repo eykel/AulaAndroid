@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import br.com.aulaandroid.data.model.GithubUser
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDAO {
@@ -14,27 +15,27 @@ interface UserDAO {
     fun insert(user: GithubUser) : Long
 
     @Delete
-    fun delete(user: GithubUser) : Int
+    suspend fun delete(user: GithubUser) : Int
 
     @Query("SELECT * FROM User WHERE id = :id")
-    fun getById(id: Int): GithubUser
+    fun getById(id: Int): Flow<GithubUser>
 
     @Query("SELECT * FROM User")
-    fun getAll(): List<GithubUser>
+    suspend fun getAll(): List<GithubUser>
 
     @Query("SELECT * FROM User WHERE favorite = 1")
-    suspend fun getFavorites(): List<GithubUser>
+    fun getFavorites(): Flow<List<GithubUser>>
 
     @Query("UPDATE User SET favorite = :favorite WHERE id = :id")
-    fun setFavorite(id: Int, favorite: Boolean)
+    suspend fun setFavorite(id: Int, favorite: Boolean)
 
     @Query("DELETE FROM User")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     @Query("DELETE FROM User WHERE id = :id")
-    fun deleteById(id: Int)
+    suspend fun deleteById(id: Int)
 
     @Query("DELETE FROM User WHERE favorite = 1")
-    fun deleteFavorites()
+    suspend fun deleteFavorites()
 
 }
