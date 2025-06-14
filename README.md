@@ -54,10 +54,11 @@ Durante o processo de desenvolvimento, o foco está em observar os melhores padr
 ## Next
 - **Para proxima aula**
 
-Atualizar na nossa home, se foi favoritado ou não
-Precisamos abstrair nosso log de erro
+Precisamos abstrair nosso log de erro - Obs: Pela quarta aula seguida
+Melhorar o tratamento da lista que retorna do server, dentro do repository. 
+(UserCase ou Mapper e verificar o repasse do erro)
+Melhorar a atribuição de favorito no item da home.
 
-- **Implement favoriteScreen**
 - **Implement settingsScreen**
 - **Logout user**
 - **Fix bottomSheet**
