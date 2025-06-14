@@ -14,6 +14,10 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,6 +33,8 @@ import coil3.request.ImageRequest
 
 @Composable
 fun HomeItem(user: GithubUser, onItemClick: (String) -> Unit = {}, onFavoriteClick: (GithubUser) -> Unit = {}){
+    var favorite by remember { mutableStateOf(user.favorite) }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -58,12 +64,14 @@ fun HomeItem(user: GithubUser, onItemClick: (String) -> Unit = {}, onFavoriteCli
         Spacer(modifier = Modifier.weight(1f))
 
         Icon(
-            imageVector = if(user.favorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+            imageVector = if(favorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
             stringResource(R.string.favorite_icon_desc),
             modifier = Modifier
                 .padding(horizontal = 10.dp)
                 .size(35.dp)
                 .clickable {
+                    favorite = !favorite
+                    user.favorite = !user.favorite
                     onFavoriteClick.invoke(user)
                 },
             tint = MyBlue

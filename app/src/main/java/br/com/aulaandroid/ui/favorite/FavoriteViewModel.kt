@@ -5,11 +5,8 @@ import androidx.lifecycle.viewModelScope
 import br.com.aulaandroid.data.model.GithubUser
 import br.com.aulaandroid.data.repository.GithubRepository
 import br.com.aulaandroid.util.RequestHandler
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.compose
 import kotlinx.coroutines.launch
 
 class FavoriteViewModel(val repository: GithubRepository) : ViewModel() {

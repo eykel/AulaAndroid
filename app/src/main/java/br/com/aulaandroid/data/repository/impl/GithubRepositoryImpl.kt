@@ -15,7 +15,27 @@ class GithubRepositoryImpl(
     val mDatabase: UserDAO
 ) : GithubRepository {
 
-    override suspend fun getUserList(param: String): RequestHandler<GithubUserList> = networking.gitUserList(param)
+    override suspend fun getUserList(param: String): RequestHandler<GithubUserList> {
+        when(val serverList = networking.gitUserList(param)){
+            is RequestHandler.Failure -> return RequestHandler.Failure(serverList.ex)
+            is RequestHandler.Success -> {
+
+                val resultList = mutableListOf<GithubUser>()
+                val favoriteList = mDatabase.getStaticFavoriteList()
+
+                favoriteList.map { favoriteLocal ->
+                    serverList.content.users.map { userFromServer ->
+                        if(favoriteLocal.id == userFromServer.id){
+                            userFromServer.favorite = true
+                        }
+                        resultList.add(userFromServer)
+                    }
+                }
+
+                return RequestHandler.Success(GithubUserList(resultList))
+            }
+        }
+    }
     override suspend fun getGitHubUser(id: Int): RequestHandler<Flow<GithubUser>> {
         return try {
             mDatabase.getById(id)
@@ -44,7 +64,7 @@ class GithubRepositoryImpl(
 
     override suspend fun setFavorite(user: GithubUser) : RequestHandler<Long> {
         return try {
-            mDatabase.insert(user.copy(favorite = !user.favorite))
+            mDatabase.insert(user)
                 .run {
                     RequestHandler.Success(this)
                 }

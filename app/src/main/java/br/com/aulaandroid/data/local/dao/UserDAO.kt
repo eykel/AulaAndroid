@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface UserDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(user: GithubUser) : Long
+    suspend fun insert(user: GithubUser) : Long
 
     @Delete
     suspend fun delete(user: GithubUser) : Int
@@ -25,6 +25,9 @@ interface UserDAO {
 
     @Query("SELECT * FROM User WHERE favorite = 1")
     fun getFavorites(): Flow<List<GithubUser>>
+
+    @Query("SELECT * FROM User WHERE favorite = 1")
+    suspend fun getStaticFavoriteList(): List<GithubUser>
 
     @Query("UPDATE User SET favorite = :favorite WHERE id = :id")
     suspend fun setFavorite(id: Int, favorite: Boolean)
