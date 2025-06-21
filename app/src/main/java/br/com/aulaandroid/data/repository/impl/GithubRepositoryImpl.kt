@@ -7,6 +7,7 @@ import br.com.aulaandroid.data.model.GithubUserList
 import br.com.aulaandroid.data.model.UserDetailModel
 import br.com.aulaandroid.data.networking.GithubNetworking
 import br.com.aulaandroid.data.repository.GithubRepository
+import br.com.aulaandroid.data.util.Logger
 import br.com.aulaandroid.util.RequestHandler
 import kotlinx.coroutines.flow.Flow
 
@@ -14,6 +15,8 @@ class GithubRepositoryImpl(
     val networking: GithubNetworking,
     val mDatabase: UserDAO
 ) : GithubRepository {
+
+    private val logger = Logger(TAG)
 
     override suspend fun getUserList(param: String): RequestHandler<GithubUserList> {
         when(val serverList = networking.gitUserList(param)){
@@ -43,7 +46,7 @@ class GithubRepositoryImpl(
                     RequestHandler.Success(this)
                 }
         }catch (ex: Exception){
-            Log.e("ERROR", "message: ${ex.message} -- cause ${ex.cause} -- stackTrace: ${ex.stackTrace}")
+            logger.logError(GET_GITHUB_USER, ex)
             RequestHandler.Failure(Exception("Falha ao pegar o usuário no BD"))
         }
     }
@@ -57,7 +60,7 @@ class GithubRepositoryImpl(
                     RequestHandler.Success(this)
                 }
         }catch (ex: Exception){
-            Log.e("ERROR", "message: ${ex.message} -- cause ${ex.cause} -- stackTrace: ${ex.stackTrace}")
+            logger.logError(GET_FAVORITE_LIST, ex)
             RequestHandler.Failure(Exception("Falha ao buscar lista de favoritos"))
         }
     }
@@ -69,8 +72,15 @@ class GithubRepositoryImpl(
                     RequestHandler.Success(this)
                 }
         }catch (ex: Exception){
-            Log.e("ERROR", "message: ${ex.message} -- cause ${ex.cause} -- stackTrace: ${ex.stackTrace}")
+            logger.logError(SET_FAVORITE, ex)
             RequestHandler.Failure(Exception("Falha ao salvar favorito"))
         }
+    }
+
+    companion object{
+        private const val TAG = "GithubRepositoryImpl"
+        private const val GET_GITHUB_USER = "GET_GITHUB_USER"
+        private const val GET_FAVORITE_LIST = "GET_FAVORITE_LIST"
+        private const val SET_FAVORITE = "SET_FAVORITE"
     }
 }

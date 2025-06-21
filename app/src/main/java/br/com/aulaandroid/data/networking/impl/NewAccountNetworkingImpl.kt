@@ -4,6 +4,7 @@ import br.com.aulaandroid.data.local.utils.SessionCache
 import br.com.aulaandroid.data.model.Session
 import br.com.aulaandroid.data.model.UserModel
 import br.com.aulaandroid.data.networking.NewAccountNetworking
+import br.com.aulaandroid.data.util.Logger
 import br.com.aulaandroid.util.RequestHandler
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -15,6 +16,9 @@ class NewAccountNetworkingImpl(
     private val firestore: FirebaseFirestore,
     private val sessionCache: SessionCache
 ) : NewAccountNetworking {
+
+    private val logger = Logger(TAG)
+
     override suspend fun newAccount(user: UserModel) : RequestHandler<Unit> {
         return try {
             auth.createUserWithEmailAndPassword(user.email, user.password.orEmpty())
@@ -25,6 +29,7 @@ class NewAccountNetworkingImpl(
                     } ?: RequestHandler.Failure(Exception("Falha ao criar usuário"))
                 }
         }catch (ex: Exception){
+            logger.logError(NEW_ACCOUNT, ex)
             RequestHandler.Failure(ex)
         }
     }
@@ -42,13 +47,17 @@ class NewAccountNetworkingImpl(
                     RequestHandler.Success(Unit)
                 }
         } catch (ex: Exception) {
+            logger.logError(CREATE_USER_ON_FIRESTORE, ex)
             RequestHandler.Failure(Exception(ex.cause))
         }
     }
 
 
     companion object {
-        const val USERS_TABLE_FIRESTORE = "users"
+        private const val USERS_TABLE_FIRESTORE = "users"
+        private const val TAG = "NewAccountNetworkingImpl"
+        private const val NEW_ACCOUNT = "NEW_ACCOUNT"
+        private const val CREATE_USER_ON_FIRESTORE = "CREATE_USER_ON_FIRESTORE"
     }
 
 }
