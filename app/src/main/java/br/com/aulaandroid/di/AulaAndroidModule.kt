@@ -61,10 +61,10 @@ val aulaAndroidModule = module {
     single { SessionManager(get()) }
 
     factory<LoginNetworking> { LoginNetworkingImpl(get(), get()) }
-    factory<LoginRepository> { LoginRepositoryImpl(get()) }
+    factory<LoginRepository> { LoginRepositoryImpl(get(),get()) }
 
-    factory<NewAccountNetworking> { NewAccountNetworkingImpl(get(), get(), get()) }
-    factory<NewAccountRepository> { NewAccountRepositoryImpl(get()) }
+    factory<NewAccountNetworking> { NewAccountNetworkingImpl(get(), get()) }
+    factory<NewAccountRepository> { NewAccountRepositoryImpl(get(),get()) }
 
     factory<GithubNetworking> { GithubNetworkingImpl(get()) }
     factory<GithubRepository> { GithubRepositoryImpl(get(), get()) }

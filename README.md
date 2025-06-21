@@ -54,9 +54,7 @@ Durante o processo de desenvolvimento, o foco está em observar os melhores padr
 ## Next
 - **Para proxima aula**
 
-Precisamos abstrair nosso log de erro - Obs: Pela quarta aula seguida
-Melhorar o tratamento da lista que retorna do server, dentro do repository. 
-(UserCase ou Mapper e verificar o repasse do erro)
+Ajustar retorno do método getFavoriteList dentro do Repository, há discordancias entre os tipos.
 Melhorar a atribuição de favorito no item da home.
 
 - **Implement settingsScreen**

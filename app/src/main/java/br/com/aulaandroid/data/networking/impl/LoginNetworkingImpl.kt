@@ -22,13 +22,6 @@ class LoginNetworkingImpl(
                 .await()
                 .run {
                     this.user?.uid?.let {
-                        //save user session just with email.
-                        sessionManager.saveSession(
-                            Session(
-                                UserModel.getUserModel(email = email),
-                                logged = true
-                            )
-                        )
                         RequestHandler.Success(Unit)
                     } ?: RequestHandler.Failure(Exception("Falha ao logar"))
                 }

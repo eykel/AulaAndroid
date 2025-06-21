@@ -1,15 +1,20 @@
 package br.com.aulaandroid.data.repository.impl
 
-import android.util.Log
 import br.com.aulaandroid.data.local.dao.UserDAO
-import br.com.aulaandroid.data.model.GithubUser
-import br.com.aulaandroid.data.model.GithubUserList
-import br.com.aulaandroid.data.model.UserDetailModel
+import br.com.aulaandroid.data.mappers.toGithubUserListModel
+import br.com.aulaandroid.data.mappers.toGithubUserResponse
+import br.com.aulaandroid.data.mappers.toListOfGithubUserModel
+import br.com.aulaandroid.data.model.GithubUserResponse
+import br.com.aulaandroid.data.model.GithubUserListResponse
+import br.com.aulaandroid.data.model.UserDetailResponse
 import br.com.aulaandroid.data.networking.GithubNetworking
 import br.com.aulaandroid.data.repository.GithubRepository
 import br.com.aulaandroid.data.util.Logger
+import br.com.aulaandroid.ui.home.model.GithubUserListModel
+import br.com.aulaandroid.ui.home.model.GithubUserModel
 import br.com.aulaandroid.util.RequestHandler
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.compose
 
 class GithubRepositoryImpl(
     val networking: GithubNetworking,
@@ -18,28 +23,20 @@ class GithubRepositoryImpl(
 
     private val logger = Logger(TAG)
 
-    override suspend fun getUserList(param: String): RequestHandler<GithubUserList> {
+    override suspend fun getUserList(param: String): RequestHandler<GithubUserListModel> {
         when(val serverList = networking.gitUserList(param)){
             is RequestHandler.Failure -> return RequestHandler.Failure(serverList.ex)
             is RequestHandler.Success -> {
 
-                val resultList = mutableListOf<GithubUser>()
                 val favoriteList = mDatabase.getStaticFavoriteList()
 
-                favoriteList.map { favoriteLocal ->
-                    serverList.content.users.map { userFromServer ->
-                        if(favoriteLocal.id == userFromServer.id){
-                            userFromServer.favorite = true
-                        }
-                        resultList.add(userFromServer)
-                    }
-                }
-
-                return RequestHandler.Success(GithubUserList(resultList))
+                return RequestHandler.Success(
+                    serverList.content.toGithubUserListModel(favoriteList)
+                )
             }
         }
     }
-    override suspend fun getGitHubUser(id: Int): RequestHandler<Flow<GithubUser>> {
+    override suspend fun getGitHubUser(id: Int): RequestHandler<Flow<GithubUserResponse>> {
         return try {
             mDatabase.getById(id)
                 .run {
@@ -51,13 +48,18 @@ class GithubRepositoryImpl(
         }
     }
 
-    override suspend fun getUserDetail(login: String): RequestHandler<UserDetailModel> = networking.getUserDetail(login)
+    override suspend fun getUserDetail(login: String): RequestHandler<UserDetailResponse> = networking.getUserDetail(login)
 
-    override suspend fun getFavoriteList(): RequestHandler<Flow<List<GithubUser>>> {
+    override suspend fun getFavoriteList(): RequestHandler<Flow<List<GithubUserModel>>> {
         return try {
             mDatabase.getFavorites()
                 .run {
-                    RequestHandler.Success(this)
+                    //need to solve it
+                    /*
+                    val result : Flow<List<GithubUserModel>> = this.collect {
+                        RequestHandler.Success(it.toListOfGithubUserModel())
+                    }*/
+                    RequestHandler.Failure(Exception("Falha ao buscar lista de favoritos"))
                 }
         }catch (ex: Exception){
             logger.logError(GET_FAVORITE_LIST, ex)
@@ -65,9 +67,9 @@ class GithubRepositoryImpl(
         }
     }
 
-    override suspend fun setFavorite(user: GithubUser) : RequestHandler<Long> {
+    override suspend fun setFavorite(user: GithubUserModel) : RequestHandler<Long> {
         return try {
-            mDatabase.insert(user)
+            mDatabase.insert(user.toGithubUserResponse())
                 .run {
                     RequestHandler.Success(this)
                 }

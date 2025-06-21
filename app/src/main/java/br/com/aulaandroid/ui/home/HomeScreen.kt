@@ -35,6 +35,8 @@ import br.com.aulaandroid.R
 import br.com.aulaandroid.navigation.AulaAndroidState
 import br.com.aulaandroid.navigation.Route
 import br.com.aulaandroid.ui.components.GenericError
+import br.com.aulaandroid.ui.home.model.HomeItem
+import br.com.aulaandroid.ui.home.model.HomeState
 import br.com.aulaandroid.ui.theme.MyBlue
 
 

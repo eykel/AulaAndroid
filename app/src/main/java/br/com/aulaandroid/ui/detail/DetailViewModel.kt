@@ -3,7 +3,7 @@ package br.com.aulaandroid.ui.detail
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.aulaandroid.data.model.UserDetailModel
+import br.com.aulaandroid.data.model.UserDetailResponse
 import br.com.aulaandroid.data.repository.GithubRepository
 import br.com.aulaandroid.util.RequestHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +25,7 @@ class DetailViewModel(val repository: GithubRepository) : ViewModel() {
 
                 is RequestHandler.Success -> {
                     Log.d("PASSEI AQUI", "getUserDetail: ${result.content}")
-                    _detailState.value = DetailState.Success(result.content as UserDetailModel)
+                    _detailState.value = DetailState.Success(result.content as UserDetailResponse)
                 }
             }
         }

@@ -1,4 +1,4 @@
-package br.com.aulaandroid.ui.home
+package br.com.aulaandroid.ui.home.model
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -26,13 +26,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import br.com.aulaandroid.R
-import br.com.aulaandroid.data.model.GithubUser
 import br.com.aulaandroid.ui.theme.MyBlue
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 
 @Composable
-fun HomeItem(user: GithubUser, onItemClick: (String) -> Unit = {}, onFavoriteClick: (GithubUser) -> Unit = {}){
+fun HomeItem(
+    user: GithubUserModel,
+    onItemClick: (String) -> Unit = {},
+    onFavoriteClick: (GithubUserModel) -> Unit = {}
+){
     var favorite by remember { mutableStateOf(user.favorite) }
 
     Row(

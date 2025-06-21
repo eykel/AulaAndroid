@@ -3,8 +3,10 @@ package br.com.aulaandroid.ui.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.aulaandroid.data.model.GithubUser
+import br.com.aulaandroid.data.model.GithubUserResponse
 import br.com.aulaandroid.data.repository.GithubRepository
+import br.com.aulaandroid.ui.home.model.GithubUserModel
+import br.com.aulaandroid.ui.home.model.HomeState
 import br.com.aulaandroid.util.RequestHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -38,7 +40,7 @@ class HomeViewModel(val repository: GithubRepository) : ViewModel() {
         }
     }
 
-    fun updateFavorite(user: GithubUser){
+    fun updateFavorite(user: GithubUserModel){
         viewModelScope.launch {
             when(val result = repository.setFavorite(user)){
                 is RequestHandler.Failure -> {

@@ -1,7 +1,7 @@
 package br.com.aulaandroid.data.networking.impl
 
-import br.com.aulaandroid.data.model.GithubUserList
-import br.com.aulaandroid.data.model.UserDetailModel
+import br.com.aulaandroid.data.model.GithubUserListResponse
+import br.com.aulaandroid.data.model.UserDetailResponse
 import br.com.aulaandroid.data.networking.GithubNetworking
 import br.com.aulaandroid.data.service.GithubApi
 import br.com.aulaandroid.data.util.Logger
@@ -13,7 +13,7 @@ class GithubNetworkingImpl(
 
     private val logger = Logger(TAG)
 
-    override suspend fun gitUserList(query: String): RequestHandler<GithubUserList> {
+    override suspend fun gitUserList(query: String): RequestHandler<GithubUserListResponse> {
         return try {
             githubApi.getUserList(query)
                 .run {
@@ -25,7 +25,7 @@ class GithubNetworkingImpl(
         }
     }
 
-    override suspend fun getUserDetail(login: String): RequestHandler<UserDetailModel> {
+    override suspend fun getUserDetail(login: String): RequestHandler<UserDetailResponse> {
         return try {
             githubApi.getUserDetail(login)
                 .run {

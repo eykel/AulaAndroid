@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "User")
-data class GithubUser(
+data class GithubUserResponse(
     @PrimaryKey
     val id: Int = 0,
     @SerializedName("login")

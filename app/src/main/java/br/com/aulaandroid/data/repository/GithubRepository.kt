@@ -1,20 +1,22 @@
 package br.com.aulaandroid.data.repository
 
-import br.com.aulaandroid.data.model.GithubUser
-import br.com.aulaandroid.data.model.GithubUserList
-import br.com.aulaandroid.data.model.UserDetailModel
+import br.com.aulaandroid.data.model.GithubUserResponse
+import br.com.aulaandroid.data.model.GithubUserListResponse
+import br.com.aulaandroid.data.model.UserDetailResponse
+import br.com.aulaandroid.ui.home.model.GithubUserListModel
+import br.com.aulaandroid.ui.home.model.GithubUserModel
 import br.com.aulaandroid.util.RequestHandler
 import kotlinx.coroutines.flow.Flow
 
 interface GithubRepository {
 
-    suspend fun getUserList(param: String) : RequestHandler<GithubUserList>
+    suspend fun getUserList(param: String) : RequestHandler<GithubUserListModel>
 
-    suspend fun getGitHubUser(id: Int) : RequestHandler<Flow<GithubUser>>
+    suspend fun getGitHubUser(id: Int) : RequestHandler<Flow<GithubUserResponse>>
 
-    suspend fun getUserDetail(login: String): RequestHandler<UserDetailModel>
+    suspend fun getUserDetail(login: String): RequestHandler<UserDetailResponse>
 
-    suspend fun getFavoriteList() : RequestHandler<Flow<List<GithubUser>>>
+    suspend fun getFavoriteList() : RequestHandler<Flow<List<GithubUserModel>>>
 
-    suspend fun setFavorite(user: GithubUser) : RequestHandler<Long>
+    suspend fun setFavorite(user: GithubUserModel) : RequestHandler<Long>
 }
