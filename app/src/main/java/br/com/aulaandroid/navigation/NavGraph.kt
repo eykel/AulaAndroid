@@ -1,7 +1,7 @@
 package br.com.aulaandroid.navigation
 
-import android.content.SharedPreferences
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -13,7 +13,6 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -35,6 +34,7 @@ import br.com.aulaandroid.ui.favorite.FavoriteScreen
 import br.com.aulaandroid.ui.home.HomeScreen
 import br.com.aulaandroid.ui.login.LoginScreen
 import br.com.aulaandroid.ui.newAccount.NewAccountScreen
+import br.com.aulaandroid.ui.settings.SettingsScreen
 import br.com.aulaandroid.ui.theme.AulaAndroidTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.inject
@@ -78,7 +78,7 @@ fun NavGraph() {
                 }
             }
         ) { innerPadding ->
-            Column(Modifier.padding(innerPadding)) {
+            Column(Modifier.padding(innerPadding).fillMaxSize()) {
                 NavHost(navController, startDestination = if(sessionState?.logged == true) Route.HomeScreen else Route.LoginScreen) {
                     composable<Route.LoginScreen> {
                         LoginScreen(koinViewModel()) { state ->
@@ -159,6 +159,25 @@ fun NavGraph() {
 
                     composable<Route.FavoriteScreen> { backStackEntry ->
                         FavoriteScreen(koinViewModel()) { state ->
+                            handleScreenState(
+                                state = state,
+                                navController = navController,
+                                updateErrorMessage = { message -> errorMessage = message },
+                                updateBottomSheetState = { isOpen ->
+                                    if (isOpen) {
+                                        coroutineScope.launch {
+                                            sheetState.show()
+                                        }
+                                    }
+                                    bottomSheetIsOpen = isOpen
+                                },
+                                sheetState = sheetState,
+                            )
+                        }
+                    }
+
+                    composable<Route.SettingScreen> { backStackEntry ->
+                        SettingsScreen(koinViewModel()) { state ->
                             handleScreenState(
                                 state = state,
                                 navController = navController,

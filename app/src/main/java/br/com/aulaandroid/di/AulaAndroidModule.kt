@@ -28,6 +28,7 @@ import br.com.aulaandroid.ui.detail.DetailViewModel
 import br.com.aulaandroid.ui.favorite.FavoriteViewModel
 import br.com.aulaandroid.ui.home.HomeViewModel
 import br.com.aulaandroid.ui.newAccount.NewAccountViewModel
+import br.com.aulaandroid.ui.settings.SettingsViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -74,6 +75,7 @@ val aulaAndroidModule = module {
     viewModel { HomeViewModel(get()) }
     viewModel { DetailViewModel(get()) }
     viewModel { FavoriteViewModel(get()) }
+    viewModel { SettingsViewModel() }
 }
 
 val apiModule = module {

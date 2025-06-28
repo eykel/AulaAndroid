@@ -15,6 +15,7 @@ import br.com.aulaandroid.ui.home.model.GithubUserModel
 import br.com.aulaandroid.util.RequestHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.compose
+import kotlinx.coroutines.flow.map
 
 class GithubRepositoryImpl(
     val networking: GithubNetworking,
@@ -52,15 +53,11 @@ class GithubRepositoryImpl(
 
     override suspend fun getFavoriteList(): RequestHandler<Flow<List<GithubUserModel>>> {
         return try {
-            mDatabase.getFavorites()
-                .run {
-                    //need to solve it
-                    /*
-                    val result : Flow<List<GithubUserModel>> = this.collect {
-                        RequestHandler.Success(it.toListOfGithubUserModel())
-                    }*/
-                    RequestHandler.Failure(Exception("Falha ao buscar lista de favoritos"))
+            val flow = mDatabase.getFavorites()
+                .map { responseList ->
+                    responseList.toListOfGithubUserModel()
                 }
+            RequestHandler.Success(flow)
         }catch (ex: Exception){
             logger.logError(GET_FAVORITE_LIST, ex)
             RequestHandler.Failure(Exception("Falha ao buscar lista de favoritos"))

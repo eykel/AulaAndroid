@@ -74,8 +74,7 @@ fun HomeItem(
                 .size(35.dp)
                 .clickable {
                     favorite = !favorite
-                    user.favorite = !user.favorite
-                    onFavoriteClick.invoke(user)
+                    onFavoriteClick.invoke(user.copy(favorite = favorite))
                 },
             tint = MyBlue
         )

@@ -42,14 +42,13 @@ fun GithubUserResponse.toGithubUserModel() =
 
 fun GithubUserListResponse.toGithubUserListModel(favoriteList: List<GithubUserResponse>): GithubUserListModel {
     val resultList = mutableListOf<GithubUserModel>()
-    favoriteList.map { favoriteLocal ->
-        this.users.map { userFromServer ->
-            if(favoriteLocal.id == userFromServer.id){
-                userFromServer.favorite = true
-            }
-            resultList.add(userFromServer.toGithubUserModel())
-        }
+    val favoriteIds = favoriteList.map {  it.id }
+
+    this.users.map { usersFromServer ->
+        usersFromServer.favorite = favoriteIds.contains(usersFromServer.id)
+        resultList.add(usersFromServer.toGithubUserModel())
     }
+
     return GithubUserListModel(resultList)
 }
 
