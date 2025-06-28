@@ -54,8 +54,8 @@ Durante o processo de desenvolvimento, o foco está em observar os melhores padr
 ## Next
 - **Para proxima aula**
 
-Ajustar retorno do método getFavoriteList dentro do Repository, há discordancias entre os tipos.
-Melhorar a atribuição de favorito no item da home.
+
+- Implementar tela de settings, funcionalidade de logout
 
 - **Implement settingsScreen**
 - **Logout user**
