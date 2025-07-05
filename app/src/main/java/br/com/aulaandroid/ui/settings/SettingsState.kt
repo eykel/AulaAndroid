@@ -1,4 +1,8 @@
 package br.com.aulaandroid.ui.settings
 
-class SettingsState {
+
+sealed class SettingsState {
+    object Default: SettingsState()
+    object Success: SettingsState()
+    data class Failure(val ex: Exception) : SettingsState()
 }
