@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class UserModel(
+    val id: String = "",
     val name: String,
     val birthDay: String,
     val email: String,
@@ -15,12 +16,14 @@ data class UserModel(
             name: String = "",
             birthDay: String = "",
             email: String = "",
-            password: String = ""
+            password: String = "",
+            id: String = ""
         ) = UserModel(
             name = name,
             birthDay = birthDay,
             email = email,
-            password = password
+            password = password,
+            id = id
         )
     }
 }

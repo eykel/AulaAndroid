@@ -1,7 +1,5 @@
 package br.com.aulaandroid.data.networking.impl
 
-import br.com.aulaandroid.data.local.utils.SessionCache
-import br.com.aulaandroid.data.model.Session
 import br.com.aulaandroid.data.model.UserService
 import br.com.aulaandroid.data.networking.NewAccountNetworking
 import br.com.aulaandroid.data.util.Logger
@@ -42,7 +40,7 @@ class NewAccountNetworkingImpl(
                 .set(user.copy(password = null))
                 .await()
                 .run {
-                    RequestHandler.Success(user)
+                    RequestHandler.Success(user.copy(id = userId))
                 }
         } catch (ex: Exception) {
             logger.logError(CREATE_USER_ON_FIRESTORE, ex)

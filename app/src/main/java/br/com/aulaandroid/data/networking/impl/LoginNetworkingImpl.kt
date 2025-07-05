@@ -11,18 +11,17 @@ import kotlinx.coroutines.tasks.await
 
 class LoginNetworkingImpl(
     private val auth: FirebaseAuth,
-    private val sessionManager: SessionManager
 ) : LoginNetworking {
 
     private val logger = Logger(TAG)
 
-    override suspend fun login(email: String, password: String) : RequestHandler<Unit> {
+    override suspend fun login(email: String, password: String) : RequestHandler<String> {
         return try {
             auth.signInWithEmailAndPassword(email, password)
                 .await()
                 .run {
                     this.user?.uid?.let {
-                        RequestHandler.Success(Unit)
+                        RequestHandler.Success(it)
                     } ?: RequestHandler.Failure(Exception("Falha ao logar"))
                 }
         }catch (ex: Exception){

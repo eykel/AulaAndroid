@@ -54,12 +54,6 @@ Durante o processo de desenvolvimento, o foco está em observar os melhores padr
 ## Next
 - **Para proxima aula**
 
-
-- Implementar tela de settings, funcionalidade de logout
-
-- **Implement settingsScreen**
-- **Logout user**
-- **Fix bottomSheet**
-- **Fix general project (strings, erros, format, remove TODO)**
+- **Fix general project (strings, erros, format, remove TODO - data de nascimento mascara)**
 - **Review Architecture**
 - **Publish app on playStore**

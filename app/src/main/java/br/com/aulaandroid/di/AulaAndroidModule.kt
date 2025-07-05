@@ -18,11 +18,15 @@ import br.com.aulaandroid.data.repository.impl.LoginRepositoryImpl
 import br.com.aulaandroid.data.repository.impl.NewAccountRepositoryImpl
 import br.com.aulaandroid.data.networking.LoginNetworking
 import br.com.aulaandroid.data.networking.NewAccountNetworking
+import br.com.aulaandroid.data.networking.SettingsNetworking
 import br.com.aulaandroid.data.networking.impl.GithubNetworkingImpl
 import br.com.aulaandroid.data.networking.impl.LoginNetworkingImpl
 import br.com.aulaandroid.data.networking.impl.NewAccountNetworkingImpl
+import br.com.aulaandroid.data.networking.impl.SettingsNetworkingImpl
 import br.com.aulaandroid.data.repository.GithubRepository
+import br.com.aulaandroid.data.repository.SettingsRepository
 import br.com.aulaandroid.data.repository.impl.GithubRepositoryImpl
+import br.com.aulaandroid.data.repository.impl.SettingsRepositoryImpl
 import br.com.aulaandroid.data.service.GithubApi
 import br.com.aulaandroid.ui.detail.DetailViewModel
 import br.com.aulaandroid.ui.favorite.FavoriteViewModel
@@ -61,21 +65,24 @@ val aulaAndroidModule = module {
 
     single { SessionManager(get()) }
 
-    factory<LoginNetworking> { LoginNetworkingImpl(get(), get()) }
+    factory<LoginNetworking> { LoginNetworkingImpl(get()) }
     factory<LoginRepository> { LoginRepositoryImpl(get(),get()) }
 
     factory<NewAccountNetworking> { NewAccountNetworkingImpl(get(), get()) }
     factory<NewAccountRepository> { NewAccountRepositoryImpl(get(),get()) }
 
     factory<GithubNetworking> { GithubNetworkingImpl(get()) }
-    factory<GithubRepository> { GithubRepositoryImpl(get(), get()) }
+    factory<GithubRepository> { GithubRepositoryImpl(get(), get(), get()) }
+
+    factory<SettingsNetworking> { SettingsNetworkingImpl(get(), get()) }
+    factory<SettingsRepository> { SettingsRepositoryImpl(get()) }
 
     viewModel { LoginViewModel(get()) }
     viewModel { NewAccountViewModel(get()) }
     viewModel { HomeViewModel(get()) }
     viewModel { DetailViewModel(get()) }
     viewModel { FavoriteViewModel(get()) }
-    viewModel { SettingsViewModel() }
+    viewModel { SettingsViewModel(get()) }
 }
 
 val apiModule = module {

@@ -2,8 +2,9 @@ package br.com.aulaandroid.ui.home.model
 
 
 data class GithubUserModel(
-    val id: Int = 0,
+    var owner: String = "",
     val userName: String,
     val avatarImage: String,
-    var favorite: Boolean = false
+    var favorite: Boolean = false,
+    val serverId: Int = 0 ,
 )

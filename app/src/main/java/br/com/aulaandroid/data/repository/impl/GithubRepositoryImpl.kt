@@ -1,11 +1,11 @@
 package br.com.aulaandroid.data.repository.impl
 
 import br.com.aulaandroid.data.local.dao.UserDAO
+import br.com.aulaandroid.data.local.utils.SessionCache
 import br.com.aulaandroid.data.mappers.toGithubUserListModel
 import br.com.aulaandroid.data.mappers.toGithubUserResponse
 import br.com.aulaandroid.data.mappers.toListOfGithubUserModel
 import br.com.aulaandroid.data.model.GithubUserResponse
-import br.com.aulaandroid.data.model.GithubUserListResponse
 import br.com.aulaandroid.data.model.UserDetailResponse
 import br.com.aulaandroid.data.networking.GithubNetworking
 import br.com.aulaandroid.data.repository.GithubRepository
@@ -14,12 +14,12 @@ import br.com.aulaandroid.ui.home.model.GithubUserListModel
 import br.com.aulaandroid.ui.home.model.GithubUserModel
 import br.com.aulaandroid.util.RequestHandler
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.compose
 import kotlinx.coroutines.flow.map
 
 class GithubRepositoryImpl(
     val networking: GithubNetworking,
-    val mDatabase: UserDAO
+    val mDatabase: UserDAO,
+    private val sessionCache: SessionCache
 ) : GithubRepository {
 
     private val logger = Logger(TAG)
@@ -28,8 +28,9 @@ class GithubRepositoryImpl(
         when(val serverList = networking.gitUserList(param)){
             is RequestHandler.Failure -> return RequestHandler.Failure(serverList.ex)
             is RequestHandler.Success -> {
+                val session = sessionCache.getActiveSession()
 
-                val favoriteList = mDatabase.getStaticFavoriteList()
+                val favoriteList = mDatabase.getStaticFavoriteList(session?.user?.id.orEmpty())
 
                 return RequestHandler.Success(
                     serverList.content.toGithubUserListModel(favoriteList)
@@ -53,7 +54,8 @@ class GithubRepositoryImpl(
 
     override suspend fun getFavoriteList(): RequestHandler<Flow<List<GithubUserModel>>> {
         return try {
-            val flow = mDatabase.getFavorites()
+            val session = sessionCache.getActiveSession()
+            val flow = mDatabase.getFavorites(session?.user?.id.orEmpty())
                 .map { responseList ->
                     responseList.toListOfGithubUserModel()
                 }
@@ -66,7 +68,8 @@ class GithubRepositoryImpl(
 
     override suspend fun setFavorite(user: GithubUserModel) : RequestHandler<Long> {
         return try {
-            mDatabase.insert(user.toGithubUserResponse())
+            val session = sessionCache.getActiveSession()
+            mDatabase.insert(user.toGithubUserResponse(session?.user?.id.orEmpty()))
                 .run {
                     RequestHandler.Success(this)
                 }

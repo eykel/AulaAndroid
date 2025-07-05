@@ -17,28 +17,15 @@ interface UserDAO {
     @Delete
     suspend fun delete(user: GithubUserResponse) : Int
 
-    @Query("SELECT * FROM User WHERE id = :id")
+    @Query("SELECT * FROM User WHERE serverId = :id")
     fun getById(id: Int): Flow<GithubUserResponse>
 
-    @Query("SELECT * FROM User")
-    suspend fun getAll(): List<GithubUserResponse>
+    @Query("SELECT * FROM User WHERE favorite = 1 AND owner = :owner")
+    fun getFavorites(owner: String): Flow<List<GithubUserResponse>>
 
-    @Query("SELECT * FROM User WHERE favorite = 1")
-    fun getFavorites(): Flow<List<GithubUserResponse>>
+    @Query("SELECT * FROM User WHERE favorite = 1 AND  owner = :owner")
+    suspend fun getStaticFavoriteList(owner: String): List<GithubUserResponse>
 
-    @Query("SELECT * FROM User WHERE favorite = 1")
-    suspend fun getStaticFavoriteList(): List<GithubUserResponse>
-
-    @Query("UPDATE User SET favorite = :favorite WHERE id = :id")
-    suspend fun setFavorite(id: Int, favorite: Boolean)
-
-    @Query("DELETE FROM User")
-    suspend fun deleteAll()
-
-    @Query("DELETE FROM User WHERE id = :id")
+    @Query("DELETE FROM User WHERE serverId = :id")
     suspend fun deleteById(id: Int)
-
-    @Query("DELETE FROM User WHERE favorite = 1")
-    suspend fun deleteFavorites()
-
 }

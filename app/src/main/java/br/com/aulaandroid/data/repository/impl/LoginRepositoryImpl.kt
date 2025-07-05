@@ -18,7 +18,7 @@ class LoginRepositoryImpl(
                 //save user session just with email.
                 sessionManager.saveSession(
                     Session(
-                        UserModel.getUserModel(email = email),
+                        UserModel.getUserModel(email = email, id = result.content),
                         logged = true
                     )
                 )

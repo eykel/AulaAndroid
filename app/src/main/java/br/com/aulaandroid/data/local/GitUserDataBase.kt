@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import br.com.aulaandroid.data.local.dao.UserDAO
 import br.com.aulaandroid.data.model.GithubUserResponse
 
-@Database(entities = [GithubUserResponse::class], version = 1)
+@Database(entities = [GithubUserResponse::class], version = 6)
 abstract class GitUserDataBase : RoomDatabase(){
 
     abstract fun userDao(): UserDAO

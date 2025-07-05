@@ -13,7 +13,8 @@ fun UserModel.toUserService() =
         name = this.name,
         birthDay = this.birthDay,
         email = this.email,
-        password = this.password
+        password = this.password,
+        id = this.id
     )
 
 fun UserService.toUserModel() =
@@ -21,31 +22,34 @@ fun UserService.toUserModel() =
         name = this.name,
         birthDay = this.birthDay,
         email = this.email,
-        password = this.password
+        password = this.password,
+        id = this.id.orEmpty()
     )
 
-fun GithubUserModel.toGithubUserResponse() =
+fun GithubUserModel.toGithubUserResponse(ownerId: String) =
     GithubUserResponse(
-        id = this.id,
+        owner = if(ownerId.isNotEmpty()) ownerId else this.owner,
         userName = this.userName,
         avatarImage = this.avatarImage,
-        favorite = this.favorite
+        favorite = this.favorite,
+        serverId = this.serverId,
     )
 
 fun GithubUserResponse.toGithubUserModel() =
     GithubUserModel(
-        id = this.id,
+        owner = this.owner.orEmpty(),
         userName = this.userName,
         avatarImage = this.avatarImage,
-        favorite = this.favorite
+        favorite = this.favorite,
+        serverId = this.serverId,
     )
 
 fun GithubUserListResponse.toGithubUserListModel(favoriteList: List<GithubUserResponse>): GithubUserListModel {
     val resultList = mutableListOf<GithubUserModel>()
-    val favoriteIds = favoriteList.map {  it.id }
+    val favoriteIds = favoriteList.map {  it.serverId }
 
     this.users.map { usersFromServer ->
-        usersFromServer.favorite = favoriteIds.contains(usersFromServer.id)
+        usersFromServer.favorite = favoriteIds.contains(usersFromServer.serverId)
         resultList.add(usersFromServer.toGithubUserModel())
     }
 
