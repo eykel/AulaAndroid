@@ -110,7 +110,8 @@ private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) 
         TextFieldCustom(
             textValue = birthDay,
             onValueChange = { newValue ->
-                birthDay = newValue
+                val masked = formatDate(newValue)
+                birthDay = masked
                 viewModel.validBirthDay(birthDay)
             },
             labelText = R.string.birthday_text,
@@ -145,4 +146,17 @@ private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) 
             loading = loading
         )
     }
+}
+
+fun formatDate(date: String) : String{
+    val digits = date.filter { it.isDigit() }
+
+    val builder = StringBuilder()
+    for(i in digits.indices){
+        if(i == 2 || i == 4) builder.append("/")
+        if(i < 8) builder.append(digits[i])
+    }
+
+    //Não esta funcionando corretamente
+    return builder.toString()
 }

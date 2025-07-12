@@ -54,6 +54,6 @@ Durante o processo de desenvolvimento, o foco está em observar os melhores padr
 ## Next
 - **Para proxima aula**
 
-- **Fix general project (strings, erros, format, remove TODO - data de nascimento mascara)**
+- **Fix data de nascimento mascara**
 - **Review Architecture**
 - **Publish app on playStore**
