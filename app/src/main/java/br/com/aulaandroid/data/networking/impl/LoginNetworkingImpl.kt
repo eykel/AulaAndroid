@@ -13,7 +13,7 @@ class LoginNetworkingImpl(
     private val context: Context
 ) : LoginNetworking {
 
-    private val logger = Logger(TAG)
+    private val logger = Logger(LAYER_CLASS)
 
     override suspend fun login(email: String, password: String) : RequestHandler<String> {
         return try {
@@ -32,7 +32,7 @@ class LoginNetworkingImpl(
     }
 
     companion object {
-        private const val TAG = "LoginNetworkingImpl"
+        private const val LAYER_CLASS = "LoginNetworkingImpl"
         private const val LOGIN = "LOGIN"
     }
 }

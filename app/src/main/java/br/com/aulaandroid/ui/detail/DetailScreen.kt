@@ -51,9 +51,7 @@ private fun Content(viewModel: DetailViewModel) {
 
 
     when(val detailState =  viewModel.detailState.collectAsState().value) {
-        DetailState.Default -> {
-            //TODO
-        }
+        DetailState.Default -> {}
         DetailState.Failure -> {
             GenericError()
         }
