@@ -14,9 +14,6 @@ interface UserDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(user: GithubUserResponse) : Long
 
-    @Delete
-    suspend fun delete(user: GithubUserResponse) : Int
-
     @Query("SELECT * FROM User WHERE serverId = :id")
     fun getById(id: Int): Flow<GithubUserResponse>
 
@@ -26,6 +23,4 @@ interface UserDAO {
     @Query("SELECT * FROM User WHERE favorite = 1 AND  owner = :owner")
     suspend fun getStaticFavoriteList(owner: String): List<GithubUserResponse>
 
-    @Query("DELETE FROM User WHERE serverId = :id")
-    suspend fun deleteById(id: Int)
 }

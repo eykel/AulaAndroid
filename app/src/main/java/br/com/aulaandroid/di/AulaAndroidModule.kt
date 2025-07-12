@@ -65,14 +65,14 @@ val aulaAndroidModule = module {
 
     single { SessionManager(get()) }
 
-    factory<LoginNetworking> { LoginNetworkingImpl(get()) }
+    factory<LoginNetworking> { LoginNetworkingImpl(get(),get()) }
     factory<LoginRepository> { LoginRepositoryImpl(get(),get()) }
 
-    factory<NewAccountNetworking> { NewAccountNetworkingImpl(get(), get()) }
+    factory<NewAccountNetworking> { NewAccountNetworkingImpl(get(), get(), get()) }
     factory<NewAccountRepository> { NewAccountRepositoryImpl(get(),get()) }
 
-    factory<GithubNetworking> { GithubNetworkingImpl(get()) }
-    factory<GithubRepository> { GithubRepositoryImpl(get(), get(), get()) }
+    factory<GithubNetworking> { GithubNetworkingImpl(get(), get()) }
+    factory<GithubRepository> { GithubRepositoryImpl(get(), get(), get(), get()) }
 
     factory<SettingsNetworking> { SettingsNetworkingImpl(get(), get()) }
     factory<SettingsRepository> { SettingsRepositoryImpl(get()) }
@@ -125,9 +125,7 @@ val retrofitModule = module {
 
 val dataBaseModule = module {
     fun provideDataBase(application: Application) : GitUserDataBase {
-        return Room.databaseBuilder(application, GitUserDataBase::class.java, DATABASE_NAME)
-            .fallbackToDestructiveMigration(true)
-            .build()
+        return GitUserDataBase.getDatabase(application)
     }
 
     fun provideDao(dataBase: GitUserDataBase) : UserDAO {

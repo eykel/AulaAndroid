@@ -13,7 +13,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -30,7 +29,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import br.com.aulaandroid.R
-import br.com.aulaandroid.navigation.AulaAndroidState
 import br.com.aulaandroid.ui.components.ApplyStyle
 import br.com.aulaandroid.ui.components.GenericError
 import br.com.aulaandroid.ui.theme.MyBlue
@@ -39,26 +37,25 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 
 @Composable
-fun DetailScreen(viewModel: DetailViewModel, login: String, onEvent: (AulaAndroidState) -> Unit) {
+fun DetailScreen(viewModel: DetailViewModel, login: String) {
 
     LaunchedEffect(Unit) {
         viewModel.getUserDetail(login)
     }
 
-    Content(viewModel, onEvent)
+    Content(viewModel)
 }
 
 @Composable
-private fun Content(viewModel: DetailViewModel, onEvent: (AulaAndroidState) -> Unit) {
+private fun Content(viewModel: DetailViewModel) {
 
 
     when(val detailState =  viewModel.detailState.collectAsState().value) {
         DetailState.Default -> {
             //TODO
         }
-        is DetailState.Failure -> {
+        DetailState.Failure -> {
             GenericError()
-            //onEvent.invoke(AulaAndroidState.Error(detailState.ex.message.orEmpty()))
         }
         is DetailState.Success -> {
             val user = detailState.result

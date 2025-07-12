@@ -1,5 +1,7 @@
 package br.com.aulaandroid.data.networking.impl
 
+import android.content.Context
+import br.com.aulaandroid.R
 import br.com.aulaandroid.data.model.UserService
 import br.com.aulaandroid.data.networking.NewAccountNetworking
 import br.com.aulaandroid.data.util.Logger
@@ -12,6 +14,7 @@ import kotlinx.coroutines.tasks.await
 class NewAccountNetworkingImpl(
     private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
+    private val context: Context
 ) : NewAccountNetworking {
 
     private val logger = Logger(TAG)
@@ -22,8 +25,9 @@ class NewAccountNetworkingImpl(
                 .await()
                 .run {
                     this.user?.uid?.let {
+                        logger.logSuccess(NEW_ACCOUNT, it.toString())
                         createUserOnFireStore(it, user)
-                    } ?: RequestHandler.Failure(Exception("Falha ao criar usuário"))
+                    } ?: RequestHandler.Failure(Exception(context.getString(R.string.failed_to_create_user)))
                 }
         }catch (ex: Exception){
             logger.logError(NEW_ACCOUNT, ex)
@@ -40,6 +44,7 @@ class NewAccountNetworkingImpl(
                 .set(user.copy(password = null))
                 .await()
                 .run {
+                    logger.logSuccess(CREATE_USER_ON_FIRESTORE, userId)
                     RequestHandler.Success(user.copy(id = userId))
                 }
         } catch (ex: Exception) {

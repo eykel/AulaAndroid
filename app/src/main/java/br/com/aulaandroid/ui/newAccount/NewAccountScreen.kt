@@ -41,7 +41,7 @@ fun NewAccountScreen(
 
 
 @Composable
-private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) -> Unit,){
+private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) -> Unit){
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }

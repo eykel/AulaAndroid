@@ -18,14 +18,10 @@ class DetailViewModel(val repository: GithubRepository) : ViewModel() {
     fun getUserDetail(login: String){
         viewModelScope.launch {
             when (val result = repository.getUserDetail(login)) {
-                is RequestHandler.Failure -> {
-                    Log.d("PASSEI AQUI", "getUserDetail: ${result.ex}")
-                    _detailState.value = DetailState.Failure(result.ex)
-                }
+                is RequestHandler.Failure -> _detailState.value = DetailState.Failure
 
                 is RequestHandler.Success -> {
-                    Log.d("PASSEI AQUI", "getUserDetail: ${result.content}")
-                    _detailState.value = DetailState.Success(result.content as UserDetailResponse)
+                    _detailState.value = DetailState.Success(result.content)
                 }
             }
         }

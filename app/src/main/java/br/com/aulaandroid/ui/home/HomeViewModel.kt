@@ -3,7 +3,6 @@ package br.com.aulaandroid.ui.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.aulaandroid.data.model.GithubUserResponse
 import br.com.aulaandroid.data.repository.GithubRepository
 import br.com.aulaandroid.ui.home.model.GithubUserModel
 import br.com.aulaandroid.ui.home.model.HomeState
@@ -16,10 +15,6 @@ class HomeViewModel(val repository: GithubRepository) : ViewModel() {
 
     private val _homeState = MutableStateFlow<HomeState>(HomeState.Default)
     val homeState = _homeState.asStateFlow()
-
-    private val _updatedFavorite = MutableStateFlow<Boolean>(false)
-    val updatedFavorite = _updatedFavorite.asStateFlow()
-
 
     fun getUserList(param: String){
         viewModelScope.launch {
@@ -41,16 +36,6 @@ class HomeViewModel(val repository: GithubRepository) : ViewModel() {
     }
 
     fun updateFavorite(user: GithubUserModel){
-        viewModelScope.launch {
-            when(val result = repository.setFavorite(user)){
-                is RequestHandler.Failure -> {
-                    _updatedFavorite.value = false
-                }
-                is RequestHandler.Success -> {
-                    //updateList(result.content)
-                    //Atualizar na nossa home, se foi favoritado ou não
-                }
-            }
-        }
+        viewModelScope.launch { repository.setFavorite(user) }
     }
 }

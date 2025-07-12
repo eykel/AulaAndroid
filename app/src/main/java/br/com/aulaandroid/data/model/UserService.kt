@@ -13,20 +13,4 @@ data class UserService(
     @SerializedName("password")
     val password: String?,
     val id: String?
-) {
-    companion object {
-        fun getUserModel(
-            name: String = "",
-            birthDay: String = "",
-            email: String = "",
-            password: String = "",
-            id: String = ""
-        ) = UserModel(
-            name = name,
-            birthDay = birthDay,
-            email = email,
-            password = password,
-            id = id
-        )
-    }
-}
+)

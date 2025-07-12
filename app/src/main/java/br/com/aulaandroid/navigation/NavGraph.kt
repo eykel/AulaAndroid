@@ -139,22 +139,7 @@ fun NavGraph() {
 
                     composable<Route.DetailScreen> { backStackEntry ->
                         val param: Route.DetailScreen = backStackEntry.toRoute()
-                        DetailScreen(koinViewModel(), param.nickName) { state ->
-                            handleScreenState(
-                                state = state,
-                                navController = navController,
-                                updateErrorMessage = { message -> errorMessage = message },
-                                updateBottomSheetState = { isOpen ->
-                                    if (isOpen) {
-                                        coroutineScope.launch {
-                                            sheetState.show()
-                                        }
-                                    }
-                                    bottomSheetIsOpen = isOpen
-                                },
-                                sheetState = sheetState,
-                            )
-                        }
+                        DetailScreen(koinViewModel(), param.nickName)
                     }
 
                     composable<Route.FavoriteScreen> { backStackEntry ->

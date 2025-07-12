@@ -2,7 +2,6 @@ package br.com.aulaandroid.ui.favorite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.aulaandroid.data.model.GithubUserResponse
 import br.com.aulaandroid.data.repository.GithubRepository
 import br.com.aulaandroid.ui.home.model.GithubUserModel
 import br.com.aulaandroid.util.RequestHandler
@@ -14,9 +13,6 @@ class FavoriteViewModel(val repository: GithubRepository) : ViewModel() {
 
     private val _favoriteState = MutableStateFlow<FavoriteState>(FavoriteState.Default)
     val favoriteState = _favoriteState.asStateFlow()
-
-    private val _updatedFavorite = MutableStateFlow<Boolean>(false)
-    val updatedFavorite = _updatedFavorite.asStateFlow()
 
     fun getFavoriteList(){
         viewModelScope.launch {
@@ -34,15 +30,6 @@ class FavoriteViewModel(val repository: GithubRepository) : ViewModel() {
     }
 
     fun updateFavorite(user: GithubUserModel){
-        viewModelScope.launch {
-            when(val result = repository.setFavorite(user)){
-                is RequestHandler.Failure -> {
-                    _updatedFavorite.value = false
-                }
-                is RequestHandler.Success -> {
-                    _updatedFavorite.value = true
-                }
-            }
-        }
+        viewModelScope.launch { repository.setFavorite(user) }
     }
 }

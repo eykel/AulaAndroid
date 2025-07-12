@@ -1,6 +1,5 @@
 package br.com.aulaandroid.data.networking
 
-import br.com.aulaandroid.data.model.UserModel
 import br.com.aulaandroid.data.model.UserService
 import br.com.aulaandroid.util.RequestHandler
 

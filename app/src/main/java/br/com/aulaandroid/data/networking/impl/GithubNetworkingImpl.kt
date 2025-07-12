@@ -1,5 +1,7 @@
 package br.com.aulaandroid.data.networking.impl
 
+import android.content.Context
+import br.com.aulaandroid.R
 import br.com.aulaandroid.data.model.GithubUserListResponse
 import br.com.aulaandroid.data.model.UserDetailResponse
 import br.com.aulaandroid.data.networking.GithubNetworking
@@ -8,7 +10,8 @@ import br.com.aulaandroid.data.util.Logger
 import br.com.aulaandroid.util.RequestHandler
 
 class GithubNetworkingImpl(
-    private val githubApi: GithubApi
+    private val githubApi: GithubApi,
+    private val context: Context
 ) : GithubNetworking {
 
     private val logger = Logger(TAG)
@@ -17,11 +20,12 @@ class GithubNetworkingImpl(
         return try {
             githubApi.getUserList(query)
                 .run {
+                    logger.logSuccess(GET_USER_LIST, this.toString())
                     RequestHandler.Success(this)
                 }
         }catch (ex: Exception){
             logger.logError(GET_USER_LIST, ex)
-            RequestHandler.Failure(Exception("Falha ao consultar"))
+            RequestHandler.Failure(Exception(context.getString(R.string.failed_to_consult_user)))
         }
     }
 
@@ -29,11 +33,12 @@ class GithubNetworkingImpl(
         return try {
             githubApi.getUserDetail(login)
                 .run {
+                    logger.logSuccess(GET_USER_DETAIL, this.toString())
                     RequestHandler.Success(this)
                 }
         }catch (ex: Exception){
             logger.logError(GET_USER_DETAIL, ex)
-            RequestHandler.Failure(Exception("Falha ao buscar detalhes de usuário"))
+            RequestHandler.Failure(Exception(context.getString(R.string.failed_seach_user_detail)))
         }
     }
 

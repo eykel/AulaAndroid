@@ -24,9 +24,4 @@ data class Cargo(
     val nomeCargo: String,
     val modeloPresencial: Boolean
 )
-class Teste(){
-    var teste = EnderecoEscola(
-        "32434",
-         435345
-    )
-}
+

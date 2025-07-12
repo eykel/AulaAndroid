@@ -1,8 +1,7 @@
 package br.com.aulaandroid.data.networking.impl
 
-import br.com.aulaandroid.data.local.utils.SessionManager
-import br.com.aulaandroid.data.model.Session
-import br.com.aulaandroid.data.model.UserModel
+import android.content.Context
+import br.com.aulaandroid.R
 import br.com.aulaandroid.data.networking.LoginNetworking
 import br.com.aulaandroid.data.util.Logger
 import br.com.aulaandroid.util.RequestHandler
@@ -11,6 +10,7 @@ import kotlinx.coroutines.tasks.await
 
 class LoginNetworkingImpl(
     private val auth: FirebaseAuth,
+    private val context: Context
 ) : LoginNetworking {
 
     private val logger = Logger(TAG)
@@ -21,8 +21,9 @@ class LoginNetworkingImpl(
                 .await()
                 .run {
                     this.user?.uid?.let {
+                        logger.logSuccess(LOGIN, it.toString())
                         RequestHandler.Success(it)
-                    } ?: RequestHandler.Failure(Exception("Falha ao logar"))
+                    } ?: RequestHandler.Failure(Exception(context.getString(R.string.failed_to_log_in)))
                 }
         }catch (ex: Exception){
             logger.logError(LOGIN, ex)

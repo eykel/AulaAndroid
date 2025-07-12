@@ -24,4 +24,11 @@
     <string name="error_title">Houve um erro por aqui</string>
     <string name="error_desc">Tivemos um erro por aqui, ja estamos trabalhando para reestabelecer seu acesso e tentar novamente</string>
     <string name="not_favorite_yet">Você ainda não favoritou ninguém</string>
+    <string name="failed_to_consult_user">Falha ao consultar usuário</string>
+    <string name="failed_seach_user_detail">Falha ao buscar detalhes de usuário</string>
+    <string name="failed_to_log_in">Falha ao logar</string>
+    <string name="failed_to_create_user">Falha ao criar usuário</string>
+    <string name="failed_to_get_user_from_db">Falha ao pegar o usuário no BD</string>
+    <string name="failed_to_search_favorite_list">Falha ao buscar lista de favoritos</string>
+    <string name="failed_to_save_favorite">Falha ao salvar favorito</string>
 </resources>
