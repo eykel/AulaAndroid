@@ -7,18 +7,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -30,6 +36,7 @@ import br.com.aulaandroid.ui.components.ButtonCustom
 import br.com.aulaandroid.ui.components.TextFieldCustom
 import br.com.aulaandroid.ui.components.util.TextFieldType
 import br.com.aulaandroid.ui.theme.MyBlue
+import br.com.aulaandroid.util.formatDate
 
 @Composable
 fun NewAccountScreen(
@@ -42,10 +49,12 @@ fun NewAccountScreen(
 
 @Composable
 private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) -> Unit){
-    var name by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var birthDay by remember { mutableStateOf("") }
+    var name by rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue()) }
+    var email by rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue()) }
+    var password by rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue()) }
+    var birthDay by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+        mutableStateOf(TextFieldValue())
+    }
 
     val validName by viewModel.validName.collectAsState()
     val validEmail by viewModel.validEmail.collectAsState()
@@ -89,7 +98,7 @@ private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) 
             textValue = name,
             onValueChange = { newValue ->
                 name = newValue
-                viewModel.validName(name)
+                viewModel.validName(name.text)
             },
             labelText = R.string.name_text,
             isError = !validName,
@@ -100,7 +109,7 @@ private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) 
             textValue = email,
             onValueChange = { newValue ->
                 email = newValue
-                viewModel.validEmail(email)
+                viewModel.validEmail(email.text)
             },
             labelText = R.string.email_text,
             isError = !validEmail,
@@ -110,20 +119,20 @@ private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) 
         TextFieldCustom(
             textValue = birthDay,
             onValueChange = { newValue ->
-                val masked = formatDate(newValue)
-                birthDay = masked
-                viewModel.validBirthDay(birthDay)
+                val masked = newValue.text.formatDate()
+                birthDay = TextFieldValue(text = masked, selection = TextRange(masked.length))
+                viewModel.validBirthDay(masked)
             },
             labelText = R.string.birthday_text,
             isError = !validBirthDay,
-            enabled = !loading
+            enabled = !loading,
         )
 
         TextFieldCustom(
             textValue = password,
             onValueChange = { newValue ->
                 password = newValue
-                viewModel.validPassword(password)
+                viewModel.validPassword(password.text)
             },
             labelText = R.string.password_text,
             isError = !validPassword,
@@ -135,10 +144,10 @@ private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) 
             onClick = {
                 viewModel.createNewAccount(
                     UserModel(
-                        name = name,
-                        birthDay = birthDay,
-                        password = password,
-                        email = email
+                        name = name.text,
+                        birthDay = birthDay.text,
+                        password = password.text,
+                        email = email.text
                     )
                 )
             },
@@ -148,15 +157,3 @@ private fun Content(viewModel: NewAccountViewModel, onEvent: (AulaAndroidState) 
     }
 }
 
-fun formatDate(date: String) : String{
-    val digits = date.filter { it.isDigit() }
-
-    val builder = StringBuilder()
-    for(i in digits.indices){
-        if(i == 2 || i == 4) builder.append("/")
-        if(i < 8) builder.append(digits[i])
-    }
-
-    //Não esta funcionando corretamente
-    return builder.toString()
-}

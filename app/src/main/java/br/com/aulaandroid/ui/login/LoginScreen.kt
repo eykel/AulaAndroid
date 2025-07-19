@@ -13,7 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,8 +44,8 @@ fun LoginScreen(
 
 @Composable
 private fun Content(viewModel: LoginViewModel, onEvent: (AulaAndroidState) -> Unit){
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var email by rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue()) }
+    var password by rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue()) }
     val validEmail by viewModel.validEmail.collectAsState()
     val loading by viewModel.loadingButton.collectAsStateWithLifecycle()
     val loginState by viewModel.loginState.collectAsState()
@@ -84,7 +85,7 @@ private fun Content(viewModel: LoginViewModel, onEvent: (AulaAndroidState) -> Un
             textValue = email,
             onValueChange = { newValue ->
                 email = newValue
-                viewModel.validEmail(email)
+                viewModel.validEmail(email.text)
             },
             labelText = R.string.email_text,
             isError = !validEmail,
@@ -102,7 +103,7 @@ private fun Content(viewModel: LoginViewModel, onEvent: (AulaAndroidState) -> Un
 
         ButtonCustom(
             onClick = {
-                viewModel.login(email, password)
+                viewModel.login(email.text, password.text)
             },
             text = R.string.login_text_button,
             loading = loading

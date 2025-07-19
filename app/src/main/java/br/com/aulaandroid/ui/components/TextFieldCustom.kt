@@ -18,19 +18,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import br.com.aulaandroid.R
 import br.com.aulaandroid.ui.components.util.TextFieldType
 import br.com.aulaandroid.ui.theme.MyBlue
+import org.w3c.dom.Text
 
 @Composable
 fun TextFieldCustom(
-    textValue: String,
+    textValue: TextFieldValue,
     labelText: Int,
     isError: Boolean = false,
     enabled: Boolean = true,
-    onValueChange: (String) -> Unit = {},
+    onValueChange: (TextFieldValue) -> Unit = {},
     type: TextFieldType =  TextFieldType.Default
 ){
 
