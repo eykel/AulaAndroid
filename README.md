@@ -49,11 +49,8 @@ Durante o processo de desenvolvimento, o foco está em observar os melhores padr
 - **Room**
 - **Firebase**
 - **Koin**
+- **Robolectric**
 
 
 ## Next
-- **Para proxima aula**
-
-- **Fix data de nascimento mascara**
-- **Review Architecture**
 - **Publish app on playStore**

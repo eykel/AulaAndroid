@@ -49,8 +49,6 @@ fun NavGraph() {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val coroutineScope = rememberCoroutineScope()
     var selectedItem by remember { mutableIntStateOf(1) }
-    //session isnt working because it need to be a remember and mutableStateOf
-    //https://stackoverflow.com/questions/69263977/why-updating-preferencemanager-doesnt-trigger-recomposition-in-jetpack-compose
     val sessionManager: SessionManager by inject()
     val sessionState by sessionManager.session.collectAsState()
 

@@ -100,4 +100,9 @@ dependencies {
 
     //Moshi
     implementation(libs.moshi.kotlin)
+
+    //Testes
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.robolectric.test)
 }

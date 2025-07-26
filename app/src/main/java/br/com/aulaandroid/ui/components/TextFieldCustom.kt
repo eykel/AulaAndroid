@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import br.com.aulaandroid.R
 import br.com.aulaandroid.ui.components.util.TextFieldType
 import br.com.aulaandroid.ui.theme.MyBlue
-import org.w3c.dom.Text
 
 @Composable
 fun TextFieldCustom(

@@ -21,6 +21,9 @@ retrofit = "2.11.0"
 coil = "3.0.4"
 dataStore = "1.1.6"
 moshiKotlin = "1.15.0"
+mockk = "1.13.2"
+coroutinesTest = "1.6.4"
+robolectric = "4.11.1"
 
 
 
@@ -54,6 +57,9 @@ retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", ver
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-network = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshiKotlin" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
+robolectric-test = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 
 
 
